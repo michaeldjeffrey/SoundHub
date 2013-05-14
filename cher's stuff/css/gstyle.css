@@ -1,0 +1,56 @@
+@charset "UTF-8";
+/* CSS Document */
+
+body {
+	background: #3a3939; /* Old browsers */
+	background: -moz-linear-gradient(top, #3a3939 23%, #646364 85%); /* FF3.6+ */
+	background: -webkit-gradient(linear, left top, left bottom, color-stop(23%,#3a3939), color-stop(85%,#646364)); /* Chrome,Safari4+ */
+	background: -webkit-linear-gradient(top, #3a3939 23%,#646364 85%); /* Chrome10+,Safari5.1+ */
+	background: -o-linear-gradient(top, #3a3939 23%,#646364 85%); /* Opera 11.10+ */
+	background: -ms-linear-gradient(top, #3a3939 23%,#646364 85%); /* IE10+ */
+	background: linear-gradient(to bottom, #3a3939 23%,#646364 85%); /* W3C */
+	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#3a3939', endColorstr='#646364',GradientType=0 ); /* IE6-9 */
+}
+.header {
+	height:120px;
+	margin:auto;
+	width:1055px;
+}
+#mainLogo {
+	background-image:url(../images/soundHUB_logo.png);
+	height:90px;
+	margin:20px 0px 0px 4px;
+	position:absolute;
+	width:192px;
+}
+.contentArea {
+	height:510px;
+	margin:auto;
+	width:98%;
+	border:thin #CCC solid;
+}
+#mainNav {
+	background-color:#999;
+	height:508px;
+	width:200px;
+}
+#player {
+	height:50px;
+	margin:auto;
+	width:100%;
+	border:thin #CCC solid;
+}
+.recommendations {
+	height:136px;
+	margin:auto;
+	width:1055px;
+	border:thin #CCC solid;
+}
+.footer {
+	height:36px;
+	margin:auto;
+	width:1055px;
+	border:thin #CCC solid;
+}
+	
+	

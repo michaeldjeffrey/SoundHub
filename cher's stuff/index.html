@@ -1,0 +1,69 @@
+<!doctype html>
+<head>
+	<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+	<script src="http://connect.soundcloud.com/sdk.js"></script>
+	<script src="scripts/mustache.js"></script>
+	<script src="scripts/script.js"></script>
+	<link href='http://fonts.googleapis.com/css?family=Ubuntu:400,700,400italic,700italic' rel='stylesheet' type='text/css'>
+	<link rel="stylesheet" type="text/css" href="css/style.css" />
+
+
+</head>
+<body>
+	<div id="container">
+		<header>
+			<ul class="left">
+				<div id="mainLogo"></div>
+			</ul>
+
+			<ul class="right">
+				<div id="search">
+					<input type="text" id="query" placeholder="Search for a genre" />
+					<input type="button" id="getQuery" value="GO" />
+				</div>
+			</ul>
+
+			<hr class="clear" />
+
+		</header>
+
+		<section>
+			<aside>
+				<div id="genreSearch">
+					<input type="text" id="genre" placeholder="add a genre" />
+					<input type="button" id="getGenre" value="GO" />
+				</div>
+				
+				<!-- <span id="rock">Rock</span>
+				<span id="metal">Metal</span>
+				<span id="electronic">Electronic</span>
+				<span id="hardstyle">Hardstyle</span>
+				<span id="progressiveRock">Progressive Rock</span>
+				<span id="alternative">Alternative</span>
+				<span id="hipHop">Hip-Hop</span>
+				<span id="rap">Rap</span>
+				<span id="RnB">R&B</span>
+				<span id="pop">Pop</span> -->
+			</aside>
+
+			<div id="results">
+
+				<p>Sorry, there are no results to display at this time.</p>
+
+				<ul id="resultsList">
+
+				</ul>
+
+			</div>
+
+		</section>
+
+		<ul id="playlist">
+
+
+		</ul>
+
+	</div>
+	
+</body>
+</html>
