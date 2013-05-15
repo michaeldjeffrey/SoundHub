@@ -1,3 +1,8 @@
+/*Normalize*/
+ul{
+	padding:0;
+}
+
 body {
 	margin:0px;
 	padding:0px;
@@ -10,7 +15,7 @@ body {
 	background: -ms-linear-gradient(top, #3a3939 23%,#646364 85%); /* IE10+ */
 	background: linear-gradient(to bottom, #ccc,#f4f4f4); /* W3C */
 	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#3a3939', endColorstr='#646364',GradientType=0 ); /* IE6-9 */
-	/*overflow:hidden;*/
+	overflow:hidden;
 	
 }
 #container {
@@ -184,9 +189,22 @@ aside span.current {
 	float:left;
 	margin:0px 5px;
 }
+.songBlock:hover .remove{
+	background: rgba(255, 0, 0, 0.5);
+}
 .songBlock .title {
 	font-size:12px;
 }
 .songBlock .albumArt img {
 	width:60px;
+}
+.remove{
+	background: rgba(255, 0, 0, 0.2);
+	border-radius: 100%;
+	padding: 2px 7px;
+	position: relative;
+	top: 0;
+	right: -50px;
+	z-index: 15;
+	text-transform: uppercase;
 }
