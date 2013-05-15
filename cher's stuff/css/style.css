@@ -25,7 +25,6 @@ hr.clear {
 	clear:both;
 }
 header {
-	background:;
 	padding:10px 10px 5px 10px;
 	color:#b2b2b2;
 	border-bottom:solid 1px rgba(0,0,0,.08);
@@ -106,7 +105,7 @@ aside span {
 	display:block;
 	background:rgba(240,240,240,.6);
 	font-size:15px;
-	text-align:center;
+	text-align:left;
 	color:#888;
 	font-weight:normal;
 	text-transform:lowercase;
@@ -114,6 +113,30 @@ aside span {
 	margin:4px 0px 4px 4px;
 	box-shadow: inset 0px -10px 30px rgba(0,0,0,.1);
 	border-radius:10px;
+}
+aside span:hover {
+	cursor:pointer;
+}
+aside .text {
+	padding:0px;
+	display:inline;
+	background:transparent !important;
+	box-shadow:none;
+}
+aside .delete {
+	border-radius:100%;
+	padding:1px 5px;
+	background:rgba(0,0,0,.3);
+	margin:0px;
+	color:#fff;
+	width:auto;
+	opacity:0;
+	text-align:right;
+	float:right;
+	display:inline;
+}
+aside span:hover .delete {
+	opacity:1;
 }
 aside span.current {
 	background:rgba(100,106,219,.7);
@@ -167,12 +190,13 @@ aside span.current {
 	bottom:0px;
 	left:0px;
 	width:100%;
-	height:110px;
+	height:125px;
 	background:#222;
 	margin:0px;
 	padding:10px;
 	overflow-x:auto;
 }
+
 .songBlock {
 	width:120px;
 	background:#333;
@@ -182,11 +206,37 @@ aside span.current {
 	padding:4px;
 	border-radius:3px;
 	float:left;
-	margin:0px 5px;
+	margin:10px 5px 0px 5px;
+}
+.delete:hover .delete, .play:hover .play {
+	visibility:visible;
 }
 .songBlock .title {
 	font-size:12px;
 }
 .songBlock .albumArt img {
 	width:60px;
+	height:60px;
+	margin-left:-50px;
+}
+.songBlock .delete {
+	background:#f00;
+	border-radius:100%;
+	padding:2px 7px;
+	position:relative;
+	top:-55px;
+	left:75px;
+	z-index:15;
+	text-transform:uppercase;
+	visibility:hidden;
+}
+.songBlock .play {
+	background:#bada55;
+	border-radius:100%;
+	padding:2px 7px;
+	position:relative;
+	top:-25px;
+	left:-10px;
+	z-index:15;
+	visibility:hidden;
 }
