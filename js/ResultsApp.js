@@ -11,10 +11,12 @@ var ResultsApp = {};
 		tagName: 'li',
 		className: 'songItem',
 		events:{
-			'click': 'clicked'
+			'click .addToPlaylist': 'clicked'
 		},
 		clicked: function(e){
-			console.log($(e.currentTarget).text());
+			// console.log(this.model.id)
+			// playSong(this.model.id)
+			SoundHub.PlaylistApp.addSongToPlaylist(this.model);
 		}
 	});
 	var ResultsView = Backbone.Marionette.CompositeView.extend({
@@ -28,7 +30,7 @@ var ResultsApp = {};
 		appendHTML: function(collectionView, itemView){
 			console.log("genreapp.appendHTML called");
 			collectionView.$('#genreList').append(itemView.el);
-		}
+		},
 	});
 
 	var GetTracksByGenre = function(tracks){
