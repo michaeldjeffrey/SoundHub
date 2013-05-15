@@ -10,3 +10,16 @@ function searchByGenre(genre, thisItem) {
 	    }
 	);
 }
+
+// SC.stream("/tracks/293", function(sound){
+// 	console.log('sound loaded', sound)
+// 	// $("audio").append("<source src="+sound.url+" type='audio/mpeg'>")
+// });
+
+function playSong(songId){
+	SC.stream('/tracks/'+songId, function(sound){
+		console.log('playing: ' , sound);
+		$("audio").attr('src',sound.url);
+		$("audio").attr('autoplay','autoplay');
+	});
+}
