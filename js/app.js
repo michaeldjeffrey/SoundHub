@@ -4,18 +4,21 @@ _.templateSettings = {
   interpolate : /\{\{([\s\S]+?)\}\}/g
 };
 
+
 //Make app
 var SoundHub = new Backbone.Marionette.Application();
 
 //assign regions
 SoundHub.addRegions({
 	genreApp: "#genreApp",
-	resultsApp: "#results"
+	resultsApp: "#results",
+	playlistApp: "#playlistApp"
 });
 
 //initialize regions
 SoundHub.addInitializer(function(){
 	SoundHub.GenreApp.initializeLayout();
+	SoundHub.PlaylistApp.initializeLayout();
 });
 
 //start application
