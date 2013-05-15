@@ -1,8 +1,9 @@
 SoundHub.GenreApp = function(){
+	var genres;
 	var GenreApp = {};
 
 	var genreList = [
-		'Alternative', 'Anime', 'Blues', "Children's Music", 'Classical', "Comedy", "Country", "Dance", "Disney", "Easy Listening", "Electronic", "Enka", "French Pop", "German Folk", "German Pop", "Fitness & Workout", "Gip-Gop/Rap", "Holiday", "Indie Pop", "Industrial", "Inspirational - Christian & Gospel", "Instrumental", "J-Pop", "Jazz", "K-Pop", "Karaoke", "Kayokyoku", "Latino", "New Age", "OPera", "Pop", "R&B/Soul", "Reggae", "Rock", "Singer/Songwriter", "Soundtrack", "Spoken Word", "Vocal", "World"
+		'Alternative', 'Anime', 'Blues', "Children's Music", 'Classical', "Comedy", "Country", "Dance", "Disney", "Easy Listening", "Electronic", "Enka", "French Pop", "German Folk", "German Pop", "Fitness & Workout", "Hip-Hop/Rap", "Holiday", "Indie Pop", "Industrial", "Inspirational - Christian & Gospel", "Instrumental", "J-Pop", "Jazz", "K-Pop", "Karaoke", "Kayokyoku", "Latino", "New Age", "OPera", "Pop", "R&B/Soul", "Reggae", "Rock", "Singer/Songwriter", "Soundtrack", "Spoken Word", "Vocal", "World"
 	]
 
 	var Genre = Backbone.Model.extend({});
@@ -27,6 +28,14 @@ SoundHub.GenreApp = function(){
 		tagName: 'ul',
 		template: '#genres_template',
 		itemView: GenreView,
+		events:  {
+			'click #getGenre': 'addGenre'
+		},
+		addGenre: function(e){
+			console.log('addgenre clicked')
+			var val = $("#genre").val()
+			genres.add({name:val})
+		}
 	});
 
 	var randomGenres = function(){
@@ -43,7 +52,7 @@ SoundHub.GenreApp = function(){
 	GenreApp.initializeLayout = function(options){
 		//make new collection
 		//calling function to generate models
-		var genres = new Genres(randomGenres());
+		genres = new Genres(randomGenres());
 
 		//making new compositeview and passing 
 		//previously made collection
