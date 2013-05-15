@@ -14,18 +14,19 @@
 <!-- ================================= -->
   <!-- START TEMPLATES -->
 <!-- ================================= -->
-<script type='text/template' id='genres-layout'>
-  <div id="searchBar"></div>
-  <div id="genreContainer"></div>
-</script>
 
 <script type='text/template' id='genres_template'>
+        <div id="genreSearch">
+          <input type="text" id="genre" placeholder="add a genre" />
+          <input type="button" id="getGenre" value="GO" />
+        </div>
 </script>
 
 <script type='text/template' id='genre_item_template'>
   {{ name }}
 </script>
 
+<!-- ================================= -->
 <script type="text/template" id="results_template">
 <p>Showing results for <span class="query">{{genre}}</span>!</p>
 </script>
@@ -41,6 +42,17 @@
 <div class='addToPlaylist' data-id='{{id}}' data-title='{{title}}' data-albumart='{{albumArt}}'>add to playlist</div>
 <div class='listens'>{{listens}} listens</div><hr class='clear'/>
 </script>
+<!-- ================================= -->
+
+<script type="text/template" id='tracks_template'>
+</script>
+
+<script type="text/template" id='tracks_item_template'>
+  <span class='remove'>X</span>
+  <div class="albumArt"><img src="{{albumArt}}" ></div>
+  <span class="title">{{title}}</span>
+</script>
+
 <!-- ================================= -->
   <!-- END  TEMPLATES -->
 <!-- ================================= -->
@@ -68,14 +80,11 @@
     <section>
       <aside>
         <div id="genreApp"></div>
-        <div id="genreSearch">
-          <input type="text" id="genre" placeholder="add a genre" />
-          <input type="button" id="getGenre" value="GO" />
-        </div>
+
         
       </aside>
 
-      <div id="results">
+      <div id="results" style="max-height: 492px;">
 
         <p>Sorry, there are no results to display at this time.</p>
 
@@ -86,13 +95,16 @@
       </div>
 
     </section>
+    <div id="playlistApp"></div>
+<!--     <ul id="playlist">
 
-    <ul id="playlist">
 
-
-    </ul>
+    </ul> -->
 
   </div>
+    <div class="audioPlayer">
+      <audio id="audio-test" controls></audio>
+    </div>
 
 
 
@@ -111,6 +123,7 @@
   <script src='js/app.js'></script>
   <script src='js/GenreApp.js'></script>
   <script src='js/ResultsApp.js'></script>
+  <script src='js/PlaylistApp.js'></script>
   <script src='js/SCapi.js'></script>
 
 </body>
