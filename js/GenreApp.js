@@ -19,7 +19,6 @@ SoundHub.GenreApp = function(){
 			'click': 'clicked'
 		},
 		clicked: function(e){
-			console.log($(e.currentTarget).text());
 			var genre = $(e.currentTarget).text().trim()
 			searchByGenre(genre)
 		}
