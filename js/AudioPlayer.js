@@ -1,5 +1,5 @@
 var audio = document.getElementById('audio-test');
-audio.controls = true;
+audio.controls = false;
 audio.addEventListener('timeupdate', updateProgress, false);
 audio.addEventListener('ended', changeSong, false)
 function togglePlayPause(){

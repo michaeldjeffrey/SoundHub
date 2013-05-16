@@ -101,19 +101,17 @@
 </ul> -->
 
 </div>
- <div class="audioPlayer">
-  <audio id="audio-test" controls></audio>
-</div>
 
 <div id="audioPlayer">
   <i class="icon-play" id='playpause' onclick='togglePlayPause()'></i>
   <i class="icon-step-backward"></i>
     <div id="progressBar"><div id="progress"> </div></div>
-  <i class="icon-step-forward"></i>
+  <i class="icon-step-forward" onclick='changeSong()'></i>
   <i class="icon-volume-up">
   <span class='volume_span'><input id="volume" value='1' min="0" max='1' step='0.1' type='range' onchange='setVolume()' /></span>
   </i>
 </div>
+<audio id="audio-test"></audio>
 
 
 
