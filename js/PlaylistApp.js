@@ -28,12 +28,16 @@ SoundHub.PlaylistApp = function(){
 		tagName: 'ul',
 		id: 'playlist',
 		template: '#tracks_template',
-		itemView: TrackView
+		itemView: TrackView,
 	});
 
 	PlaylistApp.addSongToPlaylist = function(song){
-		// console.log('add song to playlist called: ',song)
 		tracks.add(song)
+	}
+	PlaylistApp.nextSong = function(){
+			tracks.remove(tracks.first());
+			playSong(tracks.first().id)
+			// console.log(tracks.first().id)
 	}
 
 
