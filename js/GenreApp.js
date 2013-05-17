@@ -34,6 +34,7 @@ SoundHub.GenreApp = function(){
 			console.log('addgenre clicked')
 			var val = $("#genre").val()
 			genres.add({name:val})
+			searchByGenre(val)
 		}
 	});
 
