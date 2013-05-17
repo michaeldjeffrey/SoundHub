@@ -11,7 +11,7 @@ var SoundHub = new Backbone.Marionette.Application();
 //assign regions
 SoundHub.addRegions({
 	genreApp: "#genreApp",
-	resultsApp: "#results",
+	resultsApp: "#resultsApp",
 	playlistApp: "#playlistApp"
 });
 
