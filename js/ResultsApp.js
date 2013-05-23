@@ -19,12 +19,11 @@ var loadingSongs = false;
 		tagName: 'li',
 		className: 'songItem',
 		events:{
-			'click .addToPlaylist': 'clicked'
+			'click .addToPlaylist': 'addToPlaylist'
 		},
-		clicked: function(e){
-			// console.log(this.model.id)
-			// playSong(this.model.id)
+		addToPlaylist: function(e){
 			SoundHub.PlaylistApp.addSongToPlaylist(this.model);
+			console.log(this.model)
 		}
 	});
 	var ResultsView = Backbone.Marionette.CompositeView.extend({
