@@ -26,9 +26,15 @@ var loadingSongs = false;
 			console.log(this.model)
 		}
 	});
+
+
+
+
 	var ResultsView = Backbone.Marionette.CompositeView.extend({
 		initialize: function(){
-			genre = this.options.genre
+			genre = this.options.genre;
+			_.bindAll(this, 'detect_scroll');
+			$("#resultsApp").scroll(this.detect_scroll);
 		},
 		tagName: 'ul',
 		id: 'resultsList',
@@ -38,6 +44,15 @@ var loadingSongs = false;
 			console.log("genreapp.appendHTML called");
 			collectionView.$('#genreList').append(itemView.el);
 		},
+		detect_scroll: function(){
+			var height = $("#resultsList")[0].scrollHeight;
+			var scrollP = $("#resultsApp")[0].scrollTop;
+			if((scrollP + 700) > height && loadingSongs == false){
+				loadingSongs = true;
+				SoundHub.SoundCloudAPI.moreSongs(page_size, page_offset)
+				page_offset += 15;
+			}
+		}
 	});
 
 	var GetTracksByGenre = function(tracks){
@@ -77,15 +92,6 @@ var loadingSongs = false;
 		SoundHub.resultsApp.show(resultsView)
 	}
 
-	$("#resultsApp").scroll(function(){
-		var height = $("#resultsList")[0].scrollHeight;
-		var scrollP = $(this)[0].scrollTop;
-		if((scrollP + 700) > height && loadingSongs == false){
-			loadingSongs = true;
-			SoundHub.SoundCloudAPI.moreSongs(page_size, page_offset)
-			page_offset += 15;
-		}
-	})
 
 
 
