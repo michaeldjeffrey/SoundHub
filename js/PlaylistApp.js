@@ -16,7 +16,7 @@ SoundHub.PlaylistApp = function(){
 			'click .remove': 'removeSong'
 		},
 		play: function(e){
-			playSong(this.model.id)
+			SoundHub.SoundCloudAPI.playSong(this.model.id)
 		},
 		removeSong: function(e){
 			console.log('remove called')
@@ -36,7 +36,7 @@ SoundHub.PlaylistApp = function(){
 	}
 	PlaylistApp.nextSong = function(){
 			tracks.remove(tracks.first());
-			playSong(tracks.first().id)
+			SoundHub.SoundCloudAPI.playSong(tracks.first().id)
 			// console.log(tracks.first().id)
 	}
 
