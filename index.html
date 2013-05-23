@@ -103,7 +103,7 @@
 </div>
 
 <div id="audioPlayer">
-  <i class="icon-play" id='playpause' onclick='togglePlayPause()'></i>
+  <i class="icon-play" id='playpause'></i>
   <i class="icon-step-backward"></i>
     <div id="progressBar">
       <div id="progress">
@@ -111,9 +111,9 @@
         <div id="drag"></div>
       </div>
     </div>
-  <i class="icon-step-forward" onclick='changeSong()'></i>
+  <i class="icon-step-forward"></i>
   <i class="icon-volume-up">
-  <span class='volume_span'><input id="volume" value='1' min="0" max='1' step='0.1' type='range' onchange='setVolume()' /></span>
+  <span class='volume_span'><input id="volume" value='1' min="0" max='1' step='0.1' type='range' /></span>
   </i>
 </div>
 <audio id="audio-test"></audio>
@@ -128,12 +128,12 @@
 <script src="http://cdnjs.cloudflare.com/ajax/libs/underscore.js/1.4.4/underscore-min.js"></script>
 <script src="http://cdnjs.cloudflare.com/ajax/libs/backbone.js/1.0.0/backbone-min.js"></script>
 <script src="http://cdnjs.cloudflare.com/ajax/libs/backbone.marionette/1.0.1-bundled/backbone.marionette.min.js"></script>
-<script src="http://connect.soundcloud.com/sdk.js"></script>
 <script src='js/app.js'></script>
+<script src='js/AudioPlayer.js'></script>
+<script src="http://connect.soundcloud.com/sdk.js"></script>
 <script src='js/GenreApp.js'></script>
 <script src='js/ResultsApp.js'></script>
 <script src='js/PlaylistApp.js'></script>
-<script src='js/AudioPlayer.js'></script>
 <script src='js/SCapi.js'></script>
 </body>
 </html>
