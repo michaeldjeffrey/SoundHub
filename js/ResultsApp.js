@@ -89,4 +89,19 @@ var loadingSongs = false;
 
 
 
+	$("#query").on('focus', function(){
+
+		var history = results.clone();
+
+		$(this).on('keyup', function(){
+			var val = $(this).val();
+			var matched = history.filter(function(model) { 
+		    return model.attributes.title.toLowerCase().indexOf(val.toLowerCase()) > -1
+			});
+			results.reset(matched)
+			
+		});
+	});
+
+	return ResultsApp;
 }();
