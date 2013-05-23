@@ -63,8 +63,7 @@ var loadingSongs = false;
 	ResultsApp.initializeLayout = function(options, genre){
 		//make new collection
 		//calling function to generate models
-		var results = new Results(GetTracksByGenre(options));
-		console.log('new results view')
+		results = new Results(GetTracksByGenre(options));
 
 		//making new compositeview and passing 
 		//previously made collection
