@@ -77,6 +77,16 @@ var loadingSongs = false;
 		SoundHub.resultsApp.show(resultsView)
 	}
 
-	return ResultsApp;
+	$("#resultsApp").scroll(function(){
+		var height = $("#resultsList")[0].scrollHeight;
+		var scrollP = $(this)[0].scrollTop;
+		if((scrollP + 700) > height && loadingSongs == false){
+			loadingSongs = true;
+			SoundHub.SoundCloudAPI.moreSongs(page_size, page_offset)
+			page_offset += 15;
+		}
+	})
+
+
 
 }();
