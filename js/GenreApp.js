@@ -20,7 +20,7 @@ SoundHub.GenreApp = function(){
 		},
 		clicked: function(e){
 			var genre = $(e.currentTarget).text().trim()
-			searchByGenre(genre)
+			SoundHub.SoundCloudAPI.searchByGenre(genre)
 		}
 	});
 	var GenresView = Backbone.Marionette.CompositeView.extend({
@@ -34,7 +34,7 @@ SoundHub.GenreApp = function(){
 			console.log('addgenre clicked')
 			var val = $("#genre").val()
 			genres.add({name:val})
-			searchByGenre(val)
+			SoundHub.SoundCloudAPI.searchByGenre(val)
 		}
 	});
 
