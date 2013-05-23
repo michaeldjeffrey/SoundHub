@@ -49,10 +49,15 @@ var loadingSongs = false;
 				id: tracks[i].id,
 				albumArt: tracks[i].artwork_url,
 				listens: tracks[i].playback_count
-			})
-		})
-
+			});
+		});
 		return list;
+
+	}
+
+	ResultsApp.addSongs = function(tracks){
+		results.add(GetTracksByGenre(tracks))
+		loadingSongs = false;
 	}
 
 	ResultsApp.initializeLayout = function(options, genre){
