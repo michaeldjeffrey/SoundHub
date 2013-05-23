@@ -1,5 +1,13 @@
+//TODO: loading extra songs when scroll hits the bottom
+//TODO: make searching nicer
+
 SoundHub.ResultsApp = function(){
 var ResultsApp = {};
+var results;
+
+var page_size = 15;
+var page_offset = 16;
+var loadingSongs = false;
 
 	var Result = Backbone.Model.extend({});
 	var Results = Backbone.Collection.extend({
