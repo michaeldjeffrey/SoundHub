@@ -295,8 +295,18 @@ i:active{
 #drag{
   position: absolute;
   right: 0;
-  width: 5px;
+  width: 10px;
   height: 100%;
   background-color: #ccc;
 }
 /* End Player Theme */
+
+
+
+
+.faded{
+	opacity: .2;
+}
+.currentTrack{
+	background: rgb(100, 100, 100);
+}
