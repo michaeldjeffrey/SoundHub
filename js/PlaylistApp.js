@@ -1,6 +1,17 @@
 SoundHub.PlaylistApp = function(){
 	var tracks;
 	var PlaylistApp = {};
+	var currentTrackNum = 0;
+	var currentTrack = function(){
+		return tracks.at(currentTrackNum).get('id').toString();
+	}
+	var nextTrack = function(){
+		return tracks.at(currentTrackNum + 1).get('id').toString();
+	}
+	var previousTrack = function(){
+		return tracks.at(currentTrackNum - 1).get('id').toString();
+	}
+
 
 	var Track = Backbone.Model.extend({});
 	var Tracks = Backbone.Collection.extend({
