@@ -44,6 +44,11 @@ SoundHub.PlaylistApp = function(){
 
 	PlaylistApp.addSongToPlaylist = function(song){
 		tracks.add(song)
+		if(tracks.length === 1){
+			console.log('there is one track in the playlist')
+			$("#"+tracks.first().get('id')).parent().addClass('currentTrack')
+			SoundHub.SoundCloudAPI.playSong(tracks.first().get('id'))
+		}
 	}
 	PlaylistApp.nextSong = function(){
 			tracks.remove(tracks.first());
