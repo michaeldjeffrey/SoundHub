@@ -51,9 +51,16 @@ SoundHub.PlaylistApp = function(){
 		}
 	}
 	PlaylistApp.nextSong = function(){
-			tracks.remove(tracks.first());
-			SoundHub.SoundCloudAPI.playSong(tracks.first().id)
-			// console.log(tracks.first().id)
+		$("#"+currentTrack())
+			.parent()
+			.removeClass('currentTrack')
+			.addClass('faded');
+		$("#"+nextTrack())
+			.parent()
+			.addClass('currentTrack')
+		SoundHub.SoundCloudAPI.playSong(nextTrack())
+		currentTrackNum++;
+	}
 	}
 
 
