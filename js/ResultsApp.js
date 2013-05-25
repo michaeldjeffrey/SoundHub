@@ -23,7 +23,7 @@ var loadingSongs = false;
 		},
 		addToPlaylist: function(e){
 			SoundHub.PlaylistApp.addSongToPlaylist(this.model);
-			console.log(this.model)
+			$(e.currentTarget).addClass('faded');
 		}
 	});
 
