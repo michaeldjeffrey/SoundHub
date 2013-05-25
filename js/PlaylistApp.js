@@ -61,6 +61,16 @@ SoundHub.PlaylistApp = function(){
 		SoundHub.SoundCloudAPI.playSong(nextTrack())
 		currentTrackNum++;
 	}
+	PlaylistApp.previousSong = function(){
+		$("#"+currentTrack())
+			.parent()
+			.removeClass('currentTrack');
+		$("#"+previousTrack())
+			.parent()
+			.removeClass('faded')
+			.addClass('currentTrack');
+		SoundHub.SoundCloudAPI.playSong(previousTrack())
+		currentTrackNum--;
 	}
 
 
