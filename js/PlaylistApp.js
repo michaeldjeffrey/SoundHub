@@ -23,7 +23,7 @@ SoundHub.PlaylistApp = function(){
 		tagName: 'li',
 		className: 'songBlock',
 		events:{
-			'click': 'play',
+			'click .albumArt': 'play',
 			'click .remove': 'removeSong'
 		},
 		play: function(e){
@@ -56,7 +56,6 @@ SoundHub.PlaylistApp = function(){
 		//make new collection
 
 		tracks = new Tracks();
-		console.log('new playlist view');
 
 		var tracksView = new TracksView({
 			collection: tracks

@@ -25,6 +25,3 @@ SoundHub.addInitializer(function(){
 $(document).ready(function(){
 	SoundHub.start()
 })
-
-
-
