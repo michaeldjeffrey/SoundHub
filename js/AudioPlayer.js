@@ -17,7 +17,7 @@ $("#playpause").on('click', function(){
   AudioPlayer.togglePlayPause();
 });
 $(".icon-step-backward").on('click', function(){
-  AudioPlayer.previousSong();
+  SoundHub.PlaylistApp.previousSong()
 });
 $(".icon-step-forward").on('click', function(){
   SoundHub.PlaylistApp.nextSong();
