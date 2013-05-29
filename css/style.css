@@ -144,13 +144,16 @@ aside span.current {
 	padding: 15px;
 	color: rgb(153, 153, 153);
 	width: 40%;
-	height:240px;
+	height: 160px;
 	display: inline-table;
 	box-shadow: 1px 1px rgb(218, 218, 218);
 }
-}
+
 #resultsList .albumArt {
 	float:left;
+}
+#resultsList .albumArt{
+	display: inline-table;
 }
 #resultsList img {
 	border-radius:5px;
@@ -219,6 +222,9 @@ aside span.current {
 .songBlock .albumArt img {
 	width:60px;
 }
+.songBlock .artist{
+	clear: both;
+}
 .remove{
 	background: rgba(255, 0, 0, 0.2);
 	border-radius: 100%;
@@ -236,11 +242,14 @@ aside span.current {
 	display: none;
 }
 .addToPlaylist:hover, 
-.remove:hover, 
+.remove:hovadder, 
 #getGenre:hover,
 .genre_item:hover,
 #getQuery:hover{
 	cursor: pointer;
+}
+.addToPlaylist{
+	clear: both;
 }
 i{
 	font-size: 25px;
