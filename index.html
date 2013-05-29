@@ -22,9 +22,12 @@
         <input type="text" id="genre" placeholder="add a genre" />
         <input type="button" id="getGenre" value="GO" />
         </li>
+        <li class='removeGenre genre_item'>Remove Genres</li>
         </script>
 
-        <script type='text/template' id='genre_item_template'>{{ name }}</script>
+        <script type='text/template' id='genre_item_template'>
+        {{ name }} <span class='remove'>X</span>
+        </script>
 
         <!-- ================================= -->
         <script type="text/template" id="results_template">
@@ -127,13 +130,13 @@
 
 
 
-<script src="http://cdnjs.cloudflare.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+<script src="https://connect.soundcloud.com/sdk.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
 <script src="js/libs/underscore.js"></script>
 <script src="js/libs/backbone.js"></script>
 <script src="js/libs/marionette.js"></script>
 <script src='js/app.js'></script>
 <script src='js/AudioPlayer.js'></script>
-<script src="http://connect.soundcloud.com/sdk.js"></script>
 <script src='js/GenreApp.js'></script>
 <script src='js/ResultsApp.js'></script>
 <script src='js/PlaylistApp.js'></script>
