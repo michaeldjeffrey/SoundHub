@@ -13,14 +13,19 @@ SoundHub.GenreApp = function(){
 
 	var GenreView = Backbone.Marionette.ItemView.extend({
 		template: '#genre_item_template',
-		tagName: 'span',
+		tagName: 'li',
 		className: 'genre_item',
 		events:{
-			'click': 'clicked'
+			'click .remove': 'removeGenre',
+			'click': 'clicked',
 		},
 		clicked: function(e){
-			var genre = $(e.currentTarget).text().trim()
+			var genre = this.model.get('name')
 			SoundHub.SoundCloudAPI.searchByGenre(genre)
+		},
+		removeGenre: function(e){
+			e.stopImmediatePropagation();
+			genres.remove(this.model);
 		}
 	});
 	var GenresView = Backbone.Marionette.CompositeView.extend({
@@ -28,14 +33,20 @@ SoundHub.GenreApp = function(){
 		template: '#genres_template',
 		itemView: GenreView,
 		events:  {
-			'click #getGenre': 'addGenre'
+			'click #getGenre': 'addGenre',
+			'click .removeGenre': 'showRemoveGenres',
+			
 		},
 		addGenre: function(e){
 			console.log('addgenre clicked')
 			var val = $("#genre").val()
 			genres.add({name:val})
 			SoundHub.SoundCloudAPI.searchByGenre(val)
-		}
+		},
+		showRemoveGenres: function(e){
+			console.log("the X's should be showing")
+			$(".genre_item").find('.remove').toggle();
+		},
 	});
 
 	var randomGenres = function(){
