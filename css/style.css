@@ -138,11 +138,14 @@ aside span.current {
 	padding:0px;
 }
 #resultsList li {
-	list-style:none;
-	margin:0px 0px 5px 0px;
-	padding:5px;
-	color:#999;
-	border-bottom:solid 1px rgba(0,0,0,.08);
+	list-style: none;
+	margin: 5px;
+	padding: 15px;
+	color: rgb(153, 153, 153);
+	width: 40%;
+	display: inline-block;
+	box-shadow: 1px 1px rgb(218, 218, 218);
+}
 }
 #resultsList .albumArt {
 	float:left;
