@@ -1,0 +1,248 @@
+body {
+	margin:0px;
+	padding:0px;
+	font-family:ubuntu;
+/*	background: #f4f4f4; 
+	background: -moz-linear-gradient(top, #ccc, #f4f4f4); 	background: -webkit-gradient(linear, left top, left bottom, #ccc, #f4f4f4); 
+	background: -webkit-linear-gradient(top, #ccc,#f4f4f4);
+	background: -o-linear-gradient(top, #ccc, #f4f4f4);
+	background: -ms-linear-gradient(top, #ccc, #f4f4f4); 
+	background: linear-gradient(to bottom, #ccc,#f4f4f4); 	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ccc', endColorstr='#f4f4f4',GradientType=0 );*/
+	background: #3a3939; /* Old browsers */
+	background: -moz-linear-gradient(top, #3a3939 23%, #646364 85%); /* FF3.6+ */
+	background: -webkit-gradient(linear, left top, left bottom, color-stop(23%,#3a3939), color-stop(85%,#646364)); /* Chrome,Safari4+ */
+	background: -webkit-linear-gradient(top, #3a3939 23%,#646364 85%); /* Chrome10+,Safari5.1+ */
+	background: -o-linear-gradient(top, #3a3939 23%,#646364 85%); /* Opera 11.10+ */
+	background: -ms-linear-gradient(top, #3a3939 23%,#646364 85%); /* IE10+ */
+	background: linear-gradient(to bottom, #3a3939 23%,#646364 85%); /* W3C */
+	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#3a3939', endColorstr='#646364',GradientType=0 ); /* IE6-9 */
+	overflow:hidden;
+}
+#container {
+	width:90%;
+	margin:auto;
+}
+hr.clear {
+	margin:0px;
+	padding:0px;
+	height:0px;
+	background:transparent;
+	border:none;
+	clear:both;
+}
+header {
+	padding:10px 10px 5px 10px;
+	color:#b2b2b2;
+	border-bottom:solid 1px rgba(0,0,0,.08);
+	margin-bottom:5px;
+}
+#mainLogo {
+	background-image:url(../images/soundHUB_logo.png);
+	height:90px;
+	margin:0px 0px 0px 4px;
+	width:192px;
+}
+header ul {
+	padding:0px;
+	margin:0px;
+}
+header ul.left {
+	float:left;
+}
+header ul.right {
+	float:right;
+}
+header li {
+	list-style:none;
+	display:inline;
+	margin:0px;
+}
+header a:link, header a:visited {
+	text-decoration:none;
+	text-transform:uppercase;
+	color:#b2b2b2;
+}
+section {
+	margin-bottom:120px;
+}
+aside {
+	float:left;
+	width:25%;
+	max-width:175px;
+	height:100%;
+	overflow-y:auto;
+}
+#search {
+	float:left;
+	margin-top:60px;
+}
+#query {
+	width:200px;
+	padding:6px;
+	border-radius:5px;
+	border:none;
+}
+#getQuery {
+	background:transparent;
+	font-weight:700;
+	border:none;
+	color:#777;
+}
+#genreSearch {
+	text-align:right;
+	padding:3px;
+}
+#genre {
+	width:134px;
+	margin:0px;
+	border:0px;
+	padding:3px;
+	border-radius:5px;
+}
+#getGenre {
+	margin:0px;
+	background:#333;
+	border-radius:3px;
+	border:0px;
+	color:#999;
+	padding:2px;
+}
+aside span {
+	display:block;
+	background:rgba(240,240,240,.6);
+	font-size:15px;
+	text-align:left;
+	color:#888;
+	font-weight:normal;
+	text-transform:lowercase;
+	padding:8px;
+	margin:4px 0px 4px 4px;
+	box-shadow: inset 0px -10px 30px rgba(0,0,0,.1);
+	border-radius:10px;
+}
+aside span:hover {
+	cursor:pointer;
+}
+aside .text {
+	padding:0px;
+	display:inline;
+	background:transparent !important;
+	box-shadow:none;
+}
+aside .delete {
+	border-radius:100%;
+	padding:1px 5px;
+	background:rgba(0,0,0,.3);
+	margin:0px;
+	color:#fff;
+	width:auto;
+	opacity:0;
+	text-align:right;
+	float:right;
+	display:inline;
+}
+aside span:hover .delete {
+	opacity:1;
+}
+aside span.current {
+	background:rgba(100,106,219,.7);
+	box-shadow: inset 0px -10px 30px rgba(0,0,0,.3);
+	color:#fff;
+}
+#results {
+	padding:30px;
+	margin-left:175px;
+	margin-bottom:120px;
+	overflow-y:auto;
+	color:#aaa;
+}
+#resultsList {
+	margin:0px;
+	padding:0px;
+}
+#resultsList li {
+	list-style:none;
+	margin:0px 0px 5px 0px;
+	padding:5px;
+	color:#999;
+	border-bottom:solid 1px rgba(0,0,0,.08);
+}
+#resultsList .albumArt {
+	float:left;
+}
+#resultsList img {
+	border-radius:5px;
+	box-shadow:0px 2px 5px rgba(0,0,0,.2);
+	border:3px solid rgba(0,0,0,.3);
+	width:80px;
+	height:80px;
+	margin:15px 10px 0px 0px;
+}
+#resultsList h3 {
+	color:#444;
+	font-size:18px;
+	font-weight:normal;
+}
+#resultsList .title {
+	font-weight:bold;
+	text-transform:uppercase;
+}
+.query {
+	font-style:italic;
+	color:#646adb;
+}
+#playlist {
+	position:fixed;
+	bottom:0px;
+	left:0px;
+	width:100%;
+	height:125px;
+	background:#222;
+	margin:0px;
+	padding:10px;
+	overflow-x:auto;
+}
+
+.songBlock {
+	width:120px;
+	background:#333;
+	color:#fff;
+	list-style:none;
+	text-align:center;
+	padding:4px;
+	border-radius:3px;
+	float:left;
+	margin:10px 5px 0px 5px;
+}
+.delete:hover .delete, .play:hover .play {
+	visibility:visible;
+}
+.songBlock .title {
+	font-size:12px;
+}
+.songBlock .albumArt img {
+	width:60px;
+	height:60px;
+	margin-left:-50px;
+}
+.songBlock .delete {
+	background:#f00;
+	border-radius:100%;
+	padding:2px 7px;
+	position:relative;
+	top:-55px;
+	left:75px;
+	z-index:15;
+	text-transform:uppercase;
+
+}
+.songBlock .play {
+	background:#bada55;
+	border-radius:100%;
+	padding:2px 7px;
+	position:relative;
+	top:-25px;
+	left:-10px;
+	z-index:15;
+
+}

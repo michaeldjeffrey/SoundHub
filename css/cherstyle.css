@@ -66,6 +66,17 @@ aside {
 	height:100%;
 	overflow-y:auto;
 }
+#gpToggle select {
+	background:transparent;
+	border:0px;
+	border-bottom:solid 2px #777;
+	width:100%;
+	padding:3px;
+	text-align:center;
+	font-size:15px;
+	text-transform:uppercase;
+	color:#555;
+}
 #search {
 	float:left;
 	margin-top:60px;
@@ -228,7 +239,7 @@ aside span.current {
 	left:75px;
 	z-index:15;
 	text-transform:uppercase;
-	visibility:hidden;
+
 }
 .songBlock .play {
 	background:#bada55;
@@ -238,5 +249,20 @@ aside span.current {
 	top:-25px;
 	left:-10px;
 	z-index:15;
-	visibility:hidden;
+
+}
+
+#playlistDialog {
+	position:absolute;
+	top:50%;
+	left:50%;
+	margin-left:-175px;
+	width:350px;
+	padding:10px;
+	background:#eee;
+	border-radius:15px;
+	z-index:30;
+}
+#savePlaylist, #playlists {
+	display:none;
 }

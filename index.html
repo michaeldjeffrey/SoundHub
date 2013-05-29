@@ -5,7 +5,7 @@
 	<script src="scripts/mustache.js"></script>
 	<script src="scripts/script.js"></script>
 	<link href='http://fonts.googleapis.com/css?family=Ubuntu:400,700,400italic,700italic' rel='stylesheet' type='text/css'>
-	<link rel="stylesheet" type="text/css" href="css/style.css" />
+	<link rel="stylesheet" type="text/css" href="css/cherstyle.css" />
 
 
 </head>
@@ -29,6 +29,15 @@
 
 		<section>
 			<aside>
+				<div id="gpToggle">
+					<select>
+						<option value="genres">Genres:</option>
+						<option value="playlists">Playlists:</option>
+					</select>
+
+				</div>
+				<div id="genres"></div>
+				<div id="playlists"></div>
 				<div id="genreSearch">
 					<input type="text" id="genre" placeholder="add a genre" />
 					<input type="button" id="getGenre" value="GO" />
@@ -59,7 +68,7 @@
 		</section>
 
 		<ul id="playlist">
-			<li id="player"><audio src="" controls></audio></li>
+			<li id="player"><audio src="" controls></audio><span id="savePlaylist">save playlist</span></li>
 
 
 		</ul>
