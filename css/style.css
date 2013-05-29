@@ -144,7 +144,8 @@ aside span.current {
 	padding: 15px;
 	color: rgb(153, 153, 153);
 	width: 40%;
-	display: inline-block;
+	height:240px;
+	display: inline-table;
 	box-shadow: 1px 1px rgb(218, 218, 218);
 }
 }
@@ -172,7 +173,7 @@ aside span.current {
 	font-style:italic;
 	color:#646adb;
 }
-#playlist {
+#playlistApp {
 	position:fixed;
 	bottom:0px;
 	left:0px;
@@ -181,6 +182,12 @@ aside span.current {
 	background:#222;
 	margin:0px;
 	padding:10px;
+}
+#playlist{
+	margin: 0;
+	list-style: none;
+	overflow: auto;
+	white-space: nowrap;
 }
 #audioPlayer{
 	position: fixed;
@@ -192,14 +199,16 @@ aside span.current {
 }
 .songBlock {
 	width:120px;
+	height: 98%;
+	display: inline-table;
 	background:#333;
 	color:#fff;
 	list-style:none;
 	text-align:center;
 	padding:4px;
 	border-radius:3px;
-	float:left;
 	margin:0px 5px;
+	white-space: normal;
 }
 .songBlock:hover .remove{
 	background: rgba(255, 0, 0, 0.5);
@@ -320,3 +329,4 @@ i:active{
 .currentTrack{
 	background: rgb(100, 100, 100);
 }
+
