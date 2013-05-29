@@ -113,6 +113,7 @@ aside {
 	box-shadow: inset 0px -10px 30px rgba(0,0,0,.1);
 	border-radius:10px;
 	border: 1px solid rgba(170, 170, 170, 0.5);
+	position: relative;
 }
 .genre_item:hover{
 	background:rgba(230,230,230,.6);
@@ -218,6 +219,12 @@ aside span.current {
 	right: -50px;
 	z-index: 15;
 	text-transform: uppercase;
+}
+.genre_item .remove{
+	position: absolute;
+	right: 5px;
+	top: 5px;
+	display: none;
 }
 .addToPlaylist:hover, 
 .remove:hover, 
