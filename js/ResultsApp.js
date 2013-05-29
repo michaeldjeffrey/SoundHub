@@ -1,6 +1,3 @@
-//TODO: loading extra songs when scroll hits the bottom
-//TODO: make searching nicer
-
 SoundHub.ResultsApp = function(){
 var ResultsApp = {};
 var results;
