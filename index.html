@@ -18,6 +18,7 @@
 <!-- ================================= -->
 
 <script type='text/template' id='genres_template'>
+<i class="icon-chevron-sign-left playlists"></i>
 <li id="genreSearch">
 <input type="text" id="genre" placeholder="add a genre" />
 <input type="button" id="getGenre" value="GO" />
@@ -63,72 +64,57 @@
 <!-- ================================= -->
 </head>
 <body>
-
-
-<div id="container">
-  <header>
-    <ul class="left">
-      <div id="mainLogo"></div>
-    </ul>
-
-    <ul class="right">
-      <div id="search">
-        <input type="text" id="query" placeholder="Search for a genre" />
-        <input type="button" id="getQuery" value="GO" />
-      </div>
-    </ul>
-
-    <hr class="clear" />
-
-  </header>
-
-  <section>
-    <aside>
-      <div id="genreApp"></div>
-
-
-    </aside>
-
-    <div id="resultsApp" style="max-height: 492px;">
-      <p>Sorry, there are no results to display at this time.</p>
-      <ul id="resultsList">
+  <div id="container">
+    <header>
+      <ul class="left">
+        <div id="mainLogo"></div>
       </ul>
+      <ul class="right">
+        <div id="search">
+          <input type="text" id="query" placeholder="Search for a genre" />
+          <input type="button" id="getQuery" value="GO" />
+        </div>
+      </ul>
+      <hr class="clear" />
+    </header>
+    <section>
+      <aside>
+        <div id="genreApp"></div>
+      </aside>
+      <div id="resultsApp" style="max-height: 492px;">
+        <p>Sorry, there are no results to display at this time.</p>
+        <ul id="resultsList">
+        </ul>
+      </div>
+    </section>
+    <div id="audioPlayer">
+      <i class="icon-play" id='playpause'></i>
+      <i class="icon-step-backward"></i>
+      <div id="progressBar">
+        <div id="progress">
+          <div id="test"></div>
+          <div id="drag"></div>
+        </div>
+      </div>
+      <i class="icon-step-forward"></i>
+      <i class="icon-volume-up">
+        <span class='volume_span'><input id="volume" value='1' min="0" max='1' step='0.1' type='range' /></span>
+      </i>
     </div>
-  </section>
-  <div id="playlistApp"></div>
-</div>
-<div id="audioPlayer">
-  <i class="icon-play" id='playpause'></i>
-  <i class="icon-step-backward"></i>
-  <div id="progressBar">
-    <div id="progress">
-      <div id="test"></div>
-      <div id="drag"></div>
-    </div>
+    <div id="playlistApp"></div>
   </div>
-  <i class="icon-step-forward"></i>
-  <i class="icon-volume-up">
-    <span class='volume_span'><input id="volume" value='1' min="0" max='1' step='0.1' type='range' /></span>
-  </i>
-</div>
-<audio id="audio-test"></audio>
+  <audio id="audio-test"></audio>
 
-
-
-
-
-
-
-<script src="https://connect.soundcloud.com/sdk.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
-<script src="js/libs/underscore.js"></script>
-<script src="js/libs/backbone.js"></script>
-<script src="js/libs/marionette.js"></script>
-<script src='js/app.js'></script>
-<script src='js/AudioPlayer.js'></script>
-<script src='js/GenreApp.js'></script>
-<script src='js/ResultsApp.js'></script>
-<script src='js/PlaylistApp.js'></script>
-<script src='js/SCapi.js'></script>
+  <script src="https://connect.soundcloud.com/sdk.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+  <script src="js/libs/underscore.js"></script>
+  <script src="js/libs/backbone.js"></script>
+  <script src="js/libs/marionette.js"></script>
+  <script src='js/app.js'></script>
+  <script src='js/AudioPlayer.js'></script>
+  <script src='js/GenreApp.js'></script>
+  <script src='js/ResultsApp.js'></script>
+  <script src='js/PlaylistApp.js'></script>
+  <script src='js/SCapi.js'></script>
 </body>
 </html>
