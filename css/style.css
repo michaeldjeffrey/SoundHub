@@ -63,7 +63,7 @@ aside {
 	width:25%;
 	max-width:175px;
 	height:100%;
-	overflow-y:auto;
+	overflow-y:hidden;
 }
 #search {
 	float:left;
@@ -122,7 +122,14 @@ aside {
 	background:rgba(180,180,180,.3);
 	box-shadow: inset 0px -10px 30px rgba(0,0,0,.2);
 }
-#genreApp .playlists{
+#genreApp{
+	width: 355px;
+}
+#genreApp ul{
+	display: inline-table;
+	width: 175px;
+}
+#genreApp #toPlaylist{
   position: absolute;
   top: 155px;
   left: -10px;
@@ -130,7 +137,7 @@ aside {
   width: 40px;
   color: rgb(200, 200, 200);
 }
-#genreApp .playlists:hover{
+#genreApp #toPlaylist:hover{
   color: rgb(50, 50, 50);
 	background: -moz-linear-gradient(left,  rgba(0,0,0,0.3) 0%, rgba(0,0,0,0) 100%); /* FF3.6+ */
 	background: -webkit-gradient(linear, left top, right top, color-stop(0%,rgba(0,0,0,0.3)), color-stop(100%,rgba(0,0,0,0))); /* Chrome,Safari4+ */
@@ -140,7 +147,7 @@ aside {
 	background: linear-gradient(to right,  rgba(0,0,0,0.3) 0%,rgba(0,0,0,0) 100%); /* W3C */
 	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#a6000000', endColorstr='#00000000',GradientType=1 ); /* IE6-9 */
 }
-#genreApp .playlists:active{
+#genreApp #toPlaylist:active{
 	background: -moz-linear-gradient(left,  rgba(0,0,0,0.4) 0%, rgba(0,0,0,0) 100%); /* FF3.6+ */
 	background: -webkit-gradient(linear, left top, right top, color-stop(0%,rgba(0,0,0,0.4)), color-stop(100%,rgba(0,0,0,0))); /* Chrome,Safari4+ */
 	background: -webkit-linear-gradient(left,  rgba(0,0,0,0.4) 0%,rgba(0,0,0,0) 100%); /* Chrome10+,Safari5.1+ */
@@ -160,6 +167,7 @@ aside span.current {
 	margin-bottom:120px;
 	overflow-y:auto;
 	color:#aaa;
+	/*background: url("../images/Speaker-Picture.png") no-repeat top left;*/
 }
 #resultsList {
 	margin:0px;
@@ -369,3 +377,6 @@ i:active{
 	background: rgb(100, 100, 100);
 }
 
+#genres_list, #playlists_list{
+	display: inline-block;
+}
