@@ -10,6 +10,10 @@ SoundHub.GenreApp = function(){
 	var Genres = Backbone.Collection.extend({
 		model: Genre
 	});
+	var Playlist = Backbone.Model.extend({});
+	var Playlists = Backbone.Collection.extend({
+		model: Playlist
+	});
 
 	var GenreView = Backbone.Marionette.ItemView.extend({
 		template: '#genre_item_template',
@@ -28,6 +32,11 @@ SoundHub.GenreApp = function(){
 			genres.remove(this.model);
 		}
 	});
+	var PlaylistView = Backbone.Marionette.ItemView.extend({
+		template: "#playlist_item_template",
+		tagName: 'li',
+		className: 'genre_item',
+	})
 	var GenresView = Backbone.Marionette.CompositeView.extend({
 		tagName: 'ul',
 		template: '#genres_template',
@@ -35,7 +44,14 @@ SoundHub.GenreApp = function(){
 		events:  {
 			'click #getGenre': 'addGenre',
 			'click .removeGenre': 'showRemoveGenres',
-			
+			'click #toPlaylist': 'switchToPlaylists',
+		},
+		switchToPlaylists: function(e){
+			if($("#genreApp").parent().scrollLeft() < 180){
+			$("#genreApp").parent().scrollLeft(180)
+			} else {
+				$("#genreApp").parent().scrollLeft(0)
+			}
 		},
 		addGenre: function(e){
 			console.log('addgenre clicked')
@@ -48,6 +64,18 @@ SoundHub.GenreApp = function(){
 			$(".genre_item").find('.remove').toggle();
 		},
 	});
+	var PlaylistsView = Backbone.Marionette.CompositeView.extend({
+		tagName: 'ul',
+		template: '#playlists_template',
+		itemView: PlaylistView
+	})
+	var LayoutView = Backbone.Marionette.Layout.extend({
+		template: "#genreApp_layout",
+		regions: {
+			genres: "#genres_list",
+			playlists: "#playlists_list"
+		}
+	});
 
 	var randomGenres = function(){
 		console.log('randomGenres called');
@@ -55,6 +83,7 @@ SoundHub.GenreApp = function(){
 		for(var i = 0; i < 10; i++){
 			var ran = Math.floor(Math.random()*genreList.length);
 			list[i] = new Genre({name: genreList[ran]});
+			console.log(ran, genreList[ran])
 			genreList.splice(ran, 1)
 		}
 		return list;
@@ -64,15 +93,25 @@ SoundHub.GenreApp = function(){
 		//make new collection
 		//calling function to generate models
 		genres = new Genres(randomGenres());
+		playlists = new Playlists(randomGenres());
+		console.log('playlists', playlists)
+		console.log('genres', genres)
 
 		//making new compositeview and passing 
 		//previously made collection
 		var genresView = new GenresView({
 			collection: genres
 		});
+		var playlistsView = new PlaylistsView({
+			collection: playlists
+		})
+		var layout = new LayoutView();
 
 		//show the new view in the region for main app
-		SoundHub.genreApp.show(genresView)
+		// SoundHub.genreApp.show(genresView)
+		SoundHub.genreApp.show(layout);
+		layout.genres.show(genresView);
+		layout.playlists.show(playlistsView);
 	}
 
 
