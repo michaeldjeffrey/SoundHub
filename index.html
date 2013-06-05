@@ -16,9 +16,14 @@
 <!-- ================================= -->
 <!-- START TEMPLATES -->
 <!-- ================================= -->
+<script type='text/template' id='genreApp_layout'>
+<div id="genres_list"></div>
+<div id="playlists_list"></div>
+</script>
+
 
 <script type='text/template' id='genres_template'>
-<i class="icon-chevron-sign-left playlists"></i>
+<i class="icon-chevron-sign-left" id='toPlaylist'></i>
 <li id="genreSearch">
 <input type="text" id="genre" placeholder="add a genre" />
 <input type="button" id="getGenre" value="GO" />
@@ -26,7 +31,18 @@
 <li class='removeGenre genre_item'>Remove Genres</li>
 </script>
 
+<script type='text/template' id='playlists_template'>
+<li id="genreSearch">
+<input type="text" id="playlistInput" placeholder="add a playlist" />
+<input type="button" id="playlistInputGo" value="GO" />
+</li>
+<li class='removeGenre genre_item'>Remove Genres</li>
+</script>
+
 <script type='text/template' id='genre_item_template'>
+{{ name }} <span class='remove'>X</span>
+</script>
+<script type='text/template' id="playlist_item_template">
 {{ name }} <span class='remove'>X</span>
 </script>
 
