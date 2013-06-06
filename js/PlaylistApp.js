@@ -52,23 +52,23 @@ SoundHub.PlaylistApp = function(){
 	}
 	PlaylistApp.nextSong = function(){
 		$("#"+currentTrack())
-			.parent()
-			.removeClass('currentTrack')
-			.addClass('faded');
+		.parent()
+		.removeClass('currentTrack')
+		.addClass('faded');
 		$("#"+nextTrack())
-			.parent()
-			.addClass('currentTrack')
+		.parent()
+		.addClass('currentTrack')
 		SoundHub.SoundCloudAPI.playSong(nextTrack())
 		currentTrackNum++;
 	}
 	PlaylistApp.previousSong = function(){
 		$("#"+currentTrack())
-			.parent()
-			.removeClass('currentTrack');
+		.parent()
+		.removeClass('currentTrack');
 		$("#"+previousTrack())
-			.parent()
-			.removeClass('faded')
-			.addClass('currentTrack');
+		.parent()
+		.removeClass('faded')
+		.addClass('currentTrack');
 		SoundHub.SoundCloudAPI.playSong(previousTrack())
 		currentTrackNum--;
 	}
@@ -85,6 +85,8 @@ SoundHub.PlaylistApp = function(){
 
 		SoundHub.playlistApp.show(tracksView)
 	}
+
+
 	return PlaylistApp;
 
 }();
