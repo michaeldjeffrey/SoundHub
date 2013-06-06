@@ -60,7 +60,6 @@ SoundHub.GenreApp = function(){
 			SoundHub.SoundCloudAPI.searchByGenre(val)
 		},
 		showRemoveGenres: function(e){
-			console.log("the X's should be showing")
 			$(".genre_item").find('.remove').toggle();
 		},
 	});
@@ -78,24 +77,41 @@ SoundHub.GenreApp = function(){
 	});
 
 	var randomGenres = function(){
-		console.log('randomGenres called');
 		var list = [];
 		for(var i = 0; i < 10; i++){
 			var ran = Math.floor(Math.random()*genreList.length);
 			list[i] = new Genre({name: genreList[ran]});
-			console.log(ran, genreList[ran])
 			genreList.splice(ran, 1)
 		}
 		return list;
+	}
+	var gatheredPlaylists = function(){
+		var a = retrieve_localStorage();
+		console.log(a)
+		var list = [];
+		a.forEach(function(a, i){
+			list[i] = new Playlist({a})
+		})
+		console.log(list)
+		// for (var i = 0; i < localStorage.length; i++) {
+		// 	var json = JSON.parse(localStorage.getItem(i))
+		// 	console.log(json)
+		// 	list[i] = new Playlist({
+		// 		title: json.title,
+		// 		artist: json.artist,
+		// 		id: json.id,
+		// 		albumArt: json.artwork_url,
+		// 		listens: json.playback_count
+		// 	});
+		// }
+		// console.log(list);
 	}
 
 	GenreApp.initializeLayout = function(options){
 		//make new collection
 		//calling function to generate models
 		genres = new Genres(randomGenres());
-		playlists = new Playlists(randomGenres());
-		console.log('playlists', playlists)
-		console.log('genres', genres)
+		playlists = new Playlists(gatheredPlaylists());
 
 		//making new compositeview and passing 
 		//previously made collection
