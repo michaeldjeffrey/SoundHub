@@ -25,3 +25,27 @@ SoundHub.addInitializer(function(){
 $(document).ready(function(){
 	SoundHub.start()
 })
+
+function saveTask_localStorage (song) {
+  localStorage.setItem(localStorage.length, JSON.stringify(song));
+}
+
+function retrieve_localStorage(){
+  var a = [];
+  console.log('localstorage from app.js', localStorage)
+  for ( var i = 0; i < localStorage.length; i++){
+    a.push(JSON.parse(localStorage.getItem(i)));
+  }
+  // console.log('from retrieve localStorage',a);
+  return a;
+}
+
+function retrieve_playlist (playlistName) {
+  var json = JSON.parse(localStorage[playlistName]);
+  return json;
+}
+
+// var json = JSON.parse(localStorage["results"]);
+// for (i=0;i<json.length;i++)
+//             if (json[i].id == 'item-3') json.splice(i,1);
+// localStorage["results"] = JSON.stringify(json);
