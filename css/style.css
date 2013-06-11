@@ -4,10 +4,18 @@ ul{
 }
 
 body {
+	background: rgb(240,249,255); /* Old browsers */
+background: -moz-linear-gradient(top,  rgba(240,249,255,1) 0%, rgba(76,80,123,1) 100%); /* FF3.6+ */
+background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,rgba(240,249,255,1)), color-stop(100%,rgba(76,80,123,1))); /* Chrome,Safari4+ */
+background: -webkit-linear-gradient(top,  rgba(240,249,255,1) 0%,rgba(76,80,123,1) 100%); /* Chrome10+,Safari5.1+ */
+background: -o-linear-gradient(top,  rgba(240,249,255,1) 0%,rgba(76,80,123,1) 100%); /* Opera 11.10+ */
+background: -ms-linear-gradient(top,  rgba(240,249,255,1) 0%,rgba(76,80,123,1) 100%); /* IE10+ */
+background: linear-gradient(to bottom,  rgba(240,249,255,1) 0%,rgba(76,80,123,1) 100%); /* W3C */
+filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#f0f9ff', endColorstr='#4c507b',GradientType=0 ); /* IE6-9 */
 	margin:0px;
 	padding:0px;
 	font-family:ubuntu;
-	background: #f0f0f0; /* Old browsers */
+	/*background: #f0f0f0; /* Old browsers */*/
 	overflow:hidden;
 	
 }
@@ -27,7 +35,7 @@ header {
 	padding:10px 10px 5px 10px;
 	color:#b2b2b2;
 	border-bottom:solid 1px rgba(0,0,0,.08);
-	margin-bottom:5px;
+	/*margin-bottom:5px;*/
 }
 #mainLogo {
 	background-image:url(../images/soundHUB_logo.png);
@@ -64,6 +72,8 @@ aside {
 	max-width:175px;
 	height:100%;
 	overflow-y:auto;
+	padding-right: 15px;
+	border-right: solid 1px rgba(0,0,0,.08);
 }
 #search {
 	float:left;
@@ -102,7 +112,7 @@ aside {
 }
 .genre_item{
 	display:block;
-	background:rgba(240,240,240,.6);
+	background:rgba(240,240,240,1);
 	font-size:15px;
 	text-align:center;
 	color:#888;
@@ -155,11 +165,18 @@ aside span.current {
 	color:#fff;
 }
 #resultsApp {
-	padding:30px;
-	margin-left:175px;
-	margin-bottom:120px;
-	overflow-y:auto;
-	color:#aaa;
+	background: url(../images/speaker_picture.png) top left no-repeat;
+	padding: 30px;
+	margin-left: 175px;
+	margin-bottom: 120px;
+	overflow-y: auto;
+	color: rgb(210, 210, 210);
+	min-height: 600px;
+	background-size: 170px;
+}
+#resultsApp p, .addToPlaylist, .listens{
+	color: rgb(179, 179, 179);
+text-shadow: 1px 1px rgb(90, 90, 90);
 }
 #resultsList {
 	margin:0px;
