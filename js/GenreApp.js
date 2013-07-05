@@ -42,8 +42,8 @@ SoundHub.GenreApp = function(){
 		template: '#genres_template',
 		itemView: GenreView,
 		events:  {
-			'click #getGenre': 'addGenre',
-			'click .removeGenre': 'showRemoveGenres',
+			'submit form': 'addGenre',
+			'click .removeGenre': 'toggleRemoveGenres',
 			'click #toPlaylist': 'switchToPlaylists'
 		},
 		switchToPlaylists: function(e){
@@ -54,12 +54,17 @@ SoundHub.GenreApp = function(){
 			}
 		},
 		addGenre: function(e){
+			e.preventDefault();
 			console.log('addgenre clicked');
 			var val = $("#genre").val();
-			genres.add({name:val});
-			SoundHub.SoundCloudAPI.searchByGenre(val);
+			if (val.length > 2) {
+				$(".genre_item").find('.remove').css('display', 'none');
+				genres.add({name:val});
+				SoundHub.SoundCloudAPI.searchByGenre(val);
+			}
+			return false;
 		},
-		showRemoveGenres: function(e){
+		toggleRemoveGenres: function(e){
 			$(".genre_item").find('.remove').toggle();
 		}
 	});
