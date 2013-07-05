@@ -12,7 +12,11 @@ $(audio).on('timeupdate', function(){
   updateProgress();
 });
 $(audio).on('ended', function(){
-  SoundHub.PlaylistApp.nextSong();
+  try {
+    SoundHub.PlaylistApp.nextSong();
+  } catch(err) {
+    updateProgress();
+  }
 });
 
 $("#playpause").on('click', function(){
@@ -49,7 +53,7 @@ AudioPlayer.setVolume = function(){
 function updateProgress(){
   // var progress = document.getElementById('progress');
   var value = 0;
-  if(audio.currentTime > 0){
+  if(audio.currentTime > 0 && audio.currentTime != audio.duration) {
     value = Math.floor((playheadSteps / audio.duration) * audio.currentTime);
     // value = (100 / audio.duration) * audio.currentTime;
     $("#progressBar").slider( "option", "value", value );
@@ -87,7 +91,7 @@ $(function() {
        primary: "ui-icon-grip-solid-vertical"
      },
      text: false
-   })
+   });
 });
 
 
