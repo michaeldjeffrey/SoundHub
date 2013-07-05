@@ -27,7 +27,16 @@ SoundHub.PlaylistApp = function(){
 			'click .remove': 'removeSong'
 		},
 		play: function(e){
+			$("#"+currentTrack())
+			.parent()
+			.removeClass('currentTrack')
+			.addClass('faded');
 			SoundHub.SoundCloudAPI.playSong(this.model.id);
+			$("#"+this.model.id)
+			.parent()
+			.addClass('currentTrack')
+			.removeClass('faded');
+			SoundHub.PlaylistApp.updatePlaylist();
 		},
 		removeSong: function(e){
 			console.log('remove called');
@@ -84,6 +93,24 @@ SoundHub.PlaylistApp = function(){
 		});
 
 		SoundHub.playlistApp.show(tracksView);
+	};
+	PlaylistApp.updatePlaylist = function() {
+		var passedCurrent = false;
+		$('#playlist .songBlock').each(function(index, element) {
+			if (!passedCurrent && $(element).hasClass('currentTrack')) {
+				passedCurrent = true;
+				currentTrackNum = index;
+				$(element).removeClass('faded');
+			} else {
+				$(element).removeClass('currentTrack');
+				if (passedCurrent) {
+					$(element).removeClass('faded');
+				} else {
+					$(element).addClass('faded');
+
+				}
+			}
+		});
 	};
 
 
