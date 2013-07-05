@@ -6,6 +6,8 @@ var AudioPlayer = {};
 var audio = document.getElementById('audio-test');
 audio.controls = false;
 
+var playheadSteps = 1000;
+
 $(audio).on('timeupdate', function(){
   updateProgress();
 });
@@ -48,24 +50,29 @@ function updateProgress(){
   // var progress = document.getElementById('progress');
   var value = 0;
   if(audio.currentTime > 0){
-    value = Math.floor((1200 / audio.duration) * audio.currentTime);
+    value = Math.floor((playheadSteps / audio.duration) * audio.currentTime);
     // value = (100 / audio.duration) * audio.currentTime;
+    $("#progressBar").slider( "option", "value", value );
+    $("#progressBar").slider( "option", "disabled", false );
+  } else {
+    $("#progressBar").slider( "option", "value", 0 );
+    $("#progressBar").slider( "option", "disabled", true );
   }
-  $("#progressBar").slider( "option", "value", value );
 
   // progress.style.width = value + "%";
 }
 
-// Progress bar using jQuery UI:
+// Progress bar (playhead) using jQuery UI:
 $(function() {
     $("#progressBar").slider({
         range: "min",
         value: 0,
         min: 1,
-        max: 1200,
+        max: playheadSteps,
+        disabled: true,
         slide: function(event, ui) {
             $("#amount").val('$' + ui.value);
-            audio.currentTime = (ui.value / 1200) * audio.duration;
+            audio.currentTime = (ui.value / playheadSteps) * audio.duration;
             audio.removeEventListener('timeupdate', updateProgress, false);
         },
         stop: function(event, ui) {
@@ -74,6 +81,15 @@ $(function() {
     });
     $("#amount").val('$' + $("#progressBar").slider("value"));
 });
+$(function() {
+   $("#progressBar .ui-slider-handle").button({
+     icons: {
+       primary: "ui-icon-grip-solid-vertical"
+     },
+     text: false
+   })
+});
+
 
 // $('#drag').each(function(){
 //   var $drag = $(this);

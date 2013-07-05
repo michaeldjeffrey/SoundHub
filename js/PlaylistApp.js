@@ -4,13 +4,13 @@ SoundHub.PlaylistApp = function(){
 	var currentTrackNum = 0;
 	var currentTrack = function(){
 		return tracks.at(currentTrackNum).get('id').toString();
-	}
+	};
 	var nextTrack = function(){
 		return tracks.at(currentTrackNum + 1).get('id').toString();
-	}
+	};
 	var previousTrack = function(){
 		return tracks.at(currentTrackNum - 1).get('id').toString();
-	}
+	};
 
 
 	var Track = Backbone.Model.extend({});
@@ -27,11 +27,11 @@ SoundHub.PlaylistApp = function(){
 			'click .remove': 'removeSong'
 		},
 		play: function(e){
-			SoundHub.SoundCloudAPI.playSong(this.model.id)
+			SoundHub.SoundCloudAPI.playSong(this.model.id);
 		},
 		removeSong: function(e){
-			console.log('remove called')
-			tracks.remove(this.model)
+			console.log('remove called');
+			tracks.remove(this.model);
 		}
 	});
 
@@ -39,17 +39,17 @@ SoundHub.PlaylistApp = function(){
 		tagName: 'ul',
 		id: 'playlist',
 		template: '#tracks_template',
-		itemView: TrackView,
+		itemView: TrackView
 	});
 
 	PlaylistApp.addSongToPlaylist = function(song){
-		tracks.add(song)
+		tracks.add(song);
 		if(tracks.length === 1){
-			console.log('there is one track in the playlist')
-			$("#"+tracks.first().get('id')).parent().addClass('currentTrack')
-			SoundHub.SoundCloudAPI.playSong(tracks.first().get('id'))
+			console.log('there is one track in the playlist');
+			$("#"+tracks.first().get('id')).parent().addClass('currentTrack');
+			SoundHub.SoundCloudAPI.playSong(tracks.first().get('id'));
 		}
-	}
+	};
 	PlaylistApp.nextSong = function(){
 		$("#"+currentTrack())
 		.parent()
@@ -57,10 +57,10 @@ SoundHub.PlaylistApp = function(){
 		.addClass('faded');
 		$("#"+nextTrack())
 		.parent()
-		.addClass('currentTrack')
-		SoundHub.SoundCloudAPI.playSong(nextTrack())
+		.addClass('currentTrack');
+		SoundHub.SoundCloudAPI.playSong(nextTrack());
 		currentTrackNum++;
-	}
+	};
 	PlaylistApp.previousSong = function(){
 		$("#"+currentTrack())
 		.parent()
@@ -69,9 +69,9 @@ SoundHub.PlaylistApp = function(){
 		.parent()
 		.removeClass('faded')
 		.addClass('currentTrack');
-		SoundHub.SoundCloudAPI.playSong(previousTrack())
+		SoundHub.SoundCloudAPI.playSong(previousTrack());
 		currentTrackNum--;
-	}
+	};
 
 
 	PlaylistApp.initializeLayout = function(options){
@@ -83,8 +83,8 @@ SoundHub.PlaylistApp = function(){
 			collection: tracks
 		});
 
-		SoundHub.playlistApp.show(tracksView)
-	}
+		SoundHub.playlistApp.show(tracksView);
+	};
 
 
 	return PlaylistApp;
