@@ -31,6 +31,7 @@ SoundHub.SoundCloudAPI = function(){
 	SoundCloudAPI.playSong = function(songId){
 		SC.stream('/tracks/'+songId, function(sound){
 			$("audio").attr('src', sound.url);
+			$("audio").attr('scid', songId);
 			SoundHub.AudioPlayer.togglePlayPause();
 		});
 	}

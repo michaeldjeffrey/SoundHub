@@ -61,8 +61,7 @@ section {
 }
 aside {
 	float:left;
-	width:25%;
-	max-width:175px;
+	width:175px;
 	height:100%;
 	overflow-y:hidden;
 }
@@ -217,10 +216,11 @@ aside span.current {
 	bottom:0px;
 	left:0px;
 	width:100%;
-	height:100px;
+	height:125px;
 	background:#222;
 	margin:0px;
 	padding:10px;
+	z-index: 9001 !important;
 }
 #playlist{
 	margin: 0;
@@ -230,15 +230,18 @@ aside span.current {
 }
 #audioPlayer{
 	position: fixed;
-	bottom: 120px;
+	height: 25px;
+	bottom: 145px;
 	left: 0px;
 	width: 100%;
 	background: #303030;
 	padding: 5px 0px;
+	margin:0;
+	z-index: 9001;
 }
 .songBlock {
 	width:120px;
-	height: 98%;
+	height: 120px;
 	display: inline-table;
 	background:#333;
 	color:#fff;
@@ -254,6 +257,9 @@ aside span.current {
 }
 .songBlock .title {
 	font-size:12px;
+	max-height: 42px !important;
+	display: block;
+	overflow: hidden;
 }
 .songBlock .albumArt img {
 	width: 60px;
@@ -374,3 +380,36 @@ i:active{
 	color:#999;
 	padding:3px;
 }
+
+.button,
+[type="button"] {
+	cursor: pointer;
+	color: #999;
+}
+
+.button:hover,
+[type="button"]:hover {
+	color: #ccc;
+}
+
+#audioPlayer .button[disabled] {
+	cursor: default;
+	color: #111;
+}
+#audioPlayer .button[disabled]:hover {
+	color: #111;
+}
+
+::selection {
+	background: inherit !important;
+}
+::-moz-selection {
+	background: inherit !important;
+}
+
+::-webkit-scrollbar {
+	width: 6px;
+	height: 6px; 
+	z-index: 999;
+}
+

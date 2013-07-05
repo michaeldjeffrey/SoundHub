@@ -16,17 +16,27 @@ $(audio).on('ended', function(){
     SoundHub.PlaylistApp.nextSong();
   } catch(err) {
     updateProgress();
+    updatePlayerButtons();
   }
 });
 
 $("#playpause").on('click', function(){
-  AudioPlayer.togglePlayPause();
+  if (!$(this).attr('disabled')) {
+    AudioPlayer.togglePlayPause();
+    updatePlayerButtons();
+  }
 });
 $(".icon-step-backward").on('click', function(){
-  SoundHub.PlaylistApp.previousSong();
+  if (!$(this).attr('disabled')) {
+    SoundHub.PlaylistApp.previousSong();
+    updatePlayerButtons();
+  }
 });
 $(".icon-step-forward").on('click', function(){
-  SoundHub.PlaylistApp.nextSong();
+  if (!$(this).attr('disabled')) {
+    SoundHub.PlaylistApp.nextSong();
+    updatePlayerButtons();
+  }
 });
 $("#volume").on('change', function(){
   AudioPlayer.setVolume();
@@ -38,7 +48,6 @@ AudioPlayer.togglePlayPause = function(){
   } else {
     audio.pause();
   }
-  updatePlayPauseButton();
 };
 
 AudioPlayer.setVolume = function(){
@@ -56,16 +65,36 @@ function updateProgress(){
     $("#progressBar").slider( "option", "value", 0 );
     $("#progressBar").slider( "option", "disabled", true );
   }
-  updatePlayPauseButton();
+  updatePlayerButtons();
 }
-function updatePlayPauseButton(){
-  var playpause = document.getElementById('playpause');
+function updatePlayerButtons(){
+  var playpause = $('#playpause');
   if(audio.paused || audio.ended){
-    playpause.title = 'play';
-    playpause.className = 'icon-play';
+    playpause.attr('title', 'play');
+    playpause.attr('class', 'button icon icon-play');
   } else {
-    playpause.title = 'pause';
-    playpause.className = 'icon-pause';
+    playpause.attr('title', 'pause');
+    playpause.attr('class', 'button icon icon-pause');
+  }
+
+  if (SoundHub.PlaylistApp.tracksCount() > 0) {
+    playpause.removeAttr('disabled');
+  } else {
+    playpause.attr('disabled', 'disabled');
+  }
+
+  var nextBtn = $('#audioPlayer .icon-step-forward');
+  var prevBtn = $('#audioPlayer .icon-step-backward');
+
+  if (SoundHub.PlaylistApp.currentTrackNum() == 0) { // First track in playlist is currently playing.
+    prevBtn.attr('disabled', 'disabled');
+  } else {
+    prevBtn.removeAttr('disabled');
+  }
+  if (SoundHub.PlaylistApp.currentTrackNum() == SoundHub.PlaylistApp.tracksCount() - 1) { // Last track in playlist is currently playing.
+    nextBtn.attr('disabled', 'disabled');
+  } else {
+    nextBtn.removeAttr('disabled');
   }
 }
 

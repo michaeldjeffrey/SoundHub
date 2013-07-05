@@ -107,12 +107,17 @@ SoundHub.PlaylistApp = function(){
 					$(element).removeClass('faded');
 				} else {
 					$(element).addClass('faded');
-
 				}
 			}
 		});
 	};
 
+	PlaylistApp.tracksCount = function() {
+		return tracks.length;
+	};
+	PlaylistApp.currentTrackNum = function() {
+		return currentTrackNum;
+	};
 
 	return PlaylistApp;
 

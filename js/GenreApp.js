@@ -133,6 +133,9 @@ SoundHub.GenreApp = function(){
 		SoundHub.genreApp.show(layout);
 		layout.genres.show(genresView);
 		layout.playlists.show(playlistsView);
+
+		// Load up the first genre by default:
+		SoundHub.SoundCloudAPI.searchByGenre(genres.models[0].attributes.name);
 	};
 
 
