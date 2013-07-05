@@ -304,21 +304,19 @@ i:active{
 
 
 /* Player Theme */
-
-#progressBar { 
-   border:1px solid rgba(250,250,250,0.1); 
-   color:#fff; 
-   width:80%; 
-   height:15px;
-   display: inline-block;
-   position: relative;
+#audioPlayer .icons {
+	float: left;
+	width: 170px !important;
 }
-#volume{
+#audioPlayer #volume{
     -webkit-appearance: slider-vertical;
     width: 20px;
     height: 100px;
 }
-.volume_span{
+#audioPlayer .icon-volume-up {
+	position: relative;
+}
+#audioPlayer .volume_span{
 	position: absolute;
 	bottom: 25px;
 	left: -5px;
@@ -327,44 +325,24 @@ i:active{
 	background:#303030;
 	visibility: hidden;
 }
-.icon-volume-up{
-	position: relative;
-}
-.icon-volume-up:hover .volume_span{
+#audioPlayer .icon-volume-up:hover .volume_span{
 	visibility: visible;
 }
-.drag{
+#audioPlayer #progressBar.ui-slider { 
+	border:1px solid rgba(250,250,250,0.1); 
+	background: #111;
+	color:#fff;
+	margin-left: 180px;
+	margin-top: 5px;
+	margin-right: 7px;
+	height:15px;
+}
+#audioPlayer #progressBar .ui-slider-handle{
 	background: #aaa;
-	display: inline-block;
-	height: inherit;
-	width: 1%;
-	position: absolute;
-	top: 0;
+	width: 10px;
 }
-
-#progress{
-  width: 0px;
-  height:inherit;
-  /*border: 1px solid #f00;*/
-  position: relative;
-  left: 0px;
-  top: 0;
-}
-#test{
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  background-color: rgba(250, 50, 50, 0.2);
-}
-#drag{
-  position: absolute;
-  right: 0;
-  width: 10px;
-  height: 100%;
-  background-color: #ccc;
-}
-#playpause{
-	margin-left: 25px;
+#audioPlayer #progressBar .ui-slider-range{
+	background: rgba(250, 50, 50, 0.2);
 }
 /* End Player Theme */
 

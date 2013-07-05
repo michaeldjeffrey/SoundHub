@@ -6,11 +6,11 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width" />
+  <link rel="stylesheet" href="http://code.jquery.com/ui/1.10.3/themes/smoothness/jquery-ui.css" />
   <link rel="stylesheet" href="css/icons.css">
   <link rel="stylesheet" href="css/style.css">
   <link href='http://fonts.googleapis.com/css?family=Ubuntu:400,700,400italic,700italic' rel='stylesheet' type='text/css'>
 
-</script>
 <title>Soundhub</title>
 
 <!-- ================================= -->
@@ -104,18 +104,15 @@
       </div>
     </section>
     <div id="audioPlayer">
-      <i class="icon-play" id='playpause'></i>
-      <i class="icon-step-backward"></i>
-      <div id="progressBar">
-        <div id="progress">
-          <div id="test"></div>
-          <div id="drag"></div>
-        </div>
+      <div class="icons">
+        <i class="icon icon-step-backward"></i>
+        <i class="icon icon-play" id='playpause'></i>
+        <i class="icon icon-step-forward"></i>
+        <i class="icon icon-volume-up">
+          <span class='volume_span'><input id="volume" value='1' min="0" max='1' step='0.1' type='range' /></span>
+        </i>
       </div>
-      <i class="icon-step-forward"></i>
-      <i class="icon-volume-up">
-        <span class='volume_span'><input id="volume" value='1' min="0" max='1' step='0.1' type='range' /></span>
-      </i>
+      <div id="progressBar"></div>
     </div>
     <div id="playlistApp"></div>
   </div>
@@ -132,5 +129,6 @@
   <script src='js/ResultsApp.js'></script>
   <script src='js/PlaylistApp.js'></script>
   <script src='js/SCapi.js'></script>
+  <script src="http://code.jquery.com/ui/1.10.3/jquery-ui.js"></script>
 </body>
 </html>
