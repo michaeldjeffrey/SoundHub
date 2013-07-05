@@ -256,7 +256,8 @@ aside span.current {
 	font-size:12px;
 }
 .songBlock .albumArt img {
-	width:60px;
+	width: 60px;
+	height: 60px;
 }
 .songBlock .artist{
 	clear: both;
