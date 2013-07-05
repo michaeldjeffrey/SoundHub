@@ -23,8 +23,8 @@ SoundHub.addInitializer(function(){
 
 //start application
 $(document).ready(function(){
-	SoundHub.start()
-})
+	SoundHub.start();
+});
 
 function saveTask_localStorage (song) {
   localStorage.setItem(localStorage.length, JSON.stringify(song));
@@ -32,7 +32,7 @@ function saveTask_localStorage (song) {
 
 function retrieve_localStorage(){
   var a = [];
-  console.log('localstorage from app.js', localStorage)
+  console.log('localstorage from app.js', localStorage);
   for ( var i = 0; i < localStorage.length; i++){
     a.push(JSON.parse(localStorage.getItem(i)));
   }
