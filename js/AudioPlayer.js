@@ -33,16 +33,12 @@ $("#volume").on('change', function(){
 });
 
 AudioPlayer.togglePlayPause = function(){
-  var playpause = document.getElementById('playpause');
   if(audio.paused || audio.ended){
-    playpause.title = 'pause';
-    playpause.className = 'icon-pause';
     audio.play();
   } else {
-    playpause.title = 'play';
-    playpause.className = 'icon-play';
     audio.pause();
   }
+  updatePlayPauseButton();
 };
 
 AudioPlayer.setVolume = function(){
@@ -51,19 +47,26 @@ AudioPlayer.setVolume = function(){
 };
 
 function updateProgress(){
-  // var progress = document.getElementById('progress');
   var value = 0;
   if(audio.currentTime > 0 && audio.currentTime != audio.duration) {
     value = Math.floor((playheadSteps / audio.duration) * audio.currentTime);
-    // value = (100 / audio.duration) * audio.currentTime;
     $("#progressBar").slider( "option", "value", value );
     $("#progressBar").slider( "option", "disabled", false );
   } else {
     $("#progressBar").slider( "option", "value", 0 );
     $("#progressBar").slider( "option", "disabled", true );
   }
-
-  // progress.style.width = value + "%";
+  updatePlayPauseButton();
+}
+function updatePlayPauseButton(){
+  var playpause = document.getElementById('playpause');
+  if(audio.paused || audio.ended){
+    playpause.title = 'play';
+    playpause.className = 'icon-play';
+  } else {
+    playpause.title = 'pause';
+    playpause.className = 'icon-pause';
+  }
 }
 
 // Progress bar (playhead) using jQuery UI:
