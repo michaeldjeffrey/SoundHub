@@ -162,11 +162,12 @@ aside span.current {
 	color:#fff;
 }
 #resultsApp {
-	padding:30px;
-	margin-left:175px;
-	margin-bottom:120px;
-	overflow-y:auto;
-	color:#aaa;
+	padding-left: 2%;
+	margin-left: 175px;
+	margin-bottom: 120px;
+	overflow-y: auto;
+	color: #aaa;
+	max-height: 700px;
 	/*background: url("../images/Speaker-Picture.png") no-repeat top left;*/
 }
 #resultsList {
@@ -310,11 +311,11 @@ i:active{
 
 
 /* Player Theme */
-#audioPlayer .icons {
+#audioPlayer #shortTermControls {
 	float: left;
 	width: 170px !important;
 }
-#audioPlayer #volume{
+#audioPlayer #volume {
     -webkit-appearance: slider-vertical;
     width: 20px;
     height: 100px;
@@ -340,7 +341,7 @@ i:active{
 	color:#fff;
 	margin-left: 180px;
 	margin-top: 5px;
-	margin-right: 7px;
+	margin-right: 105px;
 	height:15px;
 }
 #audioPlayer #progressBar .ui-slider-handle{
@@ -349,6 +350,11 @@ i:active{
 }
 #audioPlayer #progressBar .ui-slider-range{
 	background: rgba(250, 50, 50, 0.2);
+}
+
+#audioPlayer #longTermControls {
+	float: right;
+	width: 100px !important;
 }
 /* End Player Theme */
 
