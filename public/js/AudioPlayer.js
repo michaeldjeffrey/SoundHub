@@ -7,6 +7,8 @@ SoundHub.AudioPlayer = function(){
 	audio.controls = false;
 	var lastVolume = false;
 	var audioMuted = false;
+	var shuffleEnabled = false;
+	var repeatEnabled = false;
 
 	AudioPlayer.repeatEnabled = false;
 
@@ -41,6 +43,13 @@ SoundHub.AudioPlayer = function(){
 		AudioPlayer.muteHandler();
 	});
 
+	$(".icon-random").on('click', function(e) {
+		AudioPlayer.shuffleButtonHandler(e);
+	});
+	$(".icon-repeat").on('click', function(e) {
+		AudioPlayer.repeatButtonHandler(e);
+	});
+
 	AudioPlayer.togglePlayPause = function(){
 		if(audio.paused || audio.ended){
 			audio.play();
@@ -71,6 +80,24 @@ SoundHub.AudioPlayer = function(){
 		}
 		AudioPlayer.setVolume();
 	};
+	AudioPlayer.shuffleButtonHandler = function(e) {
+		if (shuffleEnabled) {
+			shuffleEnabled = false;
+			$(e.target).attr('status', 'inactive');
+		} else {
+			shuffleEnabled = true;
+			$(e.target).attr('status', 'active');
+		}
+	}
+	AudioPlayer.repeatButtonHandler = function(e) {
+		if (repeatEnabled) {
+			repeatEnabled = false;
+			$(e.target).attr('status', 'inactive');
+		} else {
+			repeatEnabled = true;
+			$(e.target).attr('status', 'active');
+		}
+	}
 
 	AudioPlayer.playNextTrack = function() {
 		if (AudioPlayer.repeatEnabled) {
