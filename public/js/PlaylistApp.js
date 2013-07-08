@@ -2,16 +2,6 @@ SoundHub.PlaylistApp = function(){
 	var tracks;
 	var PlaylistApp = {};
 	var currentTrackNum = 0;
-	var currentTrack = function(){
-		return $('.currentTrack').children(':first').attr('id');
-	};
-	var nextTrack = function(){
-		return $('.currentTrack').next().children(':first').attr('id');
-	};
-	var previousTrack = function(){
-		return $('.currentTrack').prev().children(':first').attr('id');
-	};
-
 
 	var Track = Backbone.Model.extend({});
 	var Tracks = Backbone.Collection.extend({
@@ -27,15 +17,8 @@ SoundHub.PlaylistApp = function(){
 			'click .remove': 'removeSong'
 		},
 		play: function(e){
-			$('#'+currentTrack())
-			.parent()
-			.removeClass('currentTrack')
-			.addClass('faded');
-			$($(e.target).closest('.songBlock')[0])
-			.removeClass('faded')
-			.addClass('currentTrack');
-			SoundHub.SoundCloudAPI.playSong(currentTrack())
-			SoundHub.PlaylistApp.updatePlaylist();
+			songId = $(e.target).closest('.songBlock').children(':first').attr('id');
+			SoundHub.SoundCloudAPI.playSong(songId);
 		},
 		removeSong: function(e){
 			console.log('remove called');
@@ -53,52 +36,55 @@ SoundHub.PlaylistApp = function(){
 	$(function() {
 		$('#playlist').sortable({
 			tolerance: "pointer",
-			handle: ".icon-ellipsis-horizontal",
 			stop: function(e,ui){
-				SoundHub.PlaylistApp.updatePlaylist();
+				PlaylistApp.updatePlaylist();
 				SoundHub.AudioPlayer.updatePlayerButtons();
 			}
 		});
 	});
 
-	PlaylistApp.addSongToPlaylist = function(song){
+	PlaylistApp.currentTrackInPlaylist = function(){
+		if ($('.currentTrack')) {
+			return $('.currentTrack').children(':first').attr('id');
+		}
+	};
+	PlaylistApp.nextTrackInPlaylist = function(){
+		if ($('.currentTrack') && $('.currentTrack').next()) {
+			return $('.currentTrack').next().children(':first').attr('id');
+		}
+		return false;
+	};
+	PlaylistApp.previousTrackInPlaylist = function(){
+		if ($('.currentTrack') && $('.currentTrack').prev()) {
+			return $('.currentTrack').prev().children(':first').attr('id');
+		}
+		return false;
+	};
+	PlaylistApp.firstTrackInPlaylist = function() {
+		if ($('#playlist .songBlock').first()) {
+			return $('#playlist .songBlock').first().children(':first').attr('id');
+		}
+		return false;
+	};
+	PlaylistApp.lastTrackInPlaylist = function() {
+		if ($('#playlist .songBlock').last()) {
+			return $('#playlist .songBlock').last().children(':first').attr('id');
+		}
+		return false;
+	};
+
+
+	PlaylistApp.addSongToPlaylist = function(song) {
 		tracks.add(song);
-		// play the first song that is added to the playlist
 		if(tracks.length === 1){
 			$("#"+tracks.first().get('id')).parent().addClass('currentTrack');
 			SoundHub.SoundCloudAPI.playSong(tracks.first().get('id'));
 		}
-	};
-	PlaylistApp.nextSong = function(){
-		$("#"+nextTrack())
-		.parent()
-		.addClass('currentTrack');
-		SoundHub.SoundCloudAPI.playSong(nextTrack());
-		$("#"+currentTrack())
-		.parent()
-		.removeClass('currentTrack')
-		.addClass('faded');
-		currentTrackNum++;
+		PlaylistApp.updatePlaylist();
 		SoundHub.AudioPlayer.updatePlayerButtons();
 	};
-	PlaylistApp.previousSong = function(){
-		var cTrack = currentTrack();
-		$("#"+previousTrack())
-		.parent()
-		.removeClass('faded')
-		.addClass('currentTrack');
-		SoundHub.SoundCloudAPI.playSong(previousTrack());
-		$("#"+cTrack)
-		.parent()
-		.removeClass('currentTrack');
-		currentTrackNum--;
-		SoundHub.AudioPlayer.updatePlayerButtons();
-	};
-
 
 	PlaylistApp.initializeLayout = function(options){
-		//make new collection
-
 		tracks = new Tracks();
 
 		var tracksView = new TracksView({
@@ -108,14 +94,15 @@ SoundHub.PlaylistApp = function(){
 		SoundHub.playlistApp.show(tracksView);
 	};
 	PlaylistApp.updatePlaylist = function() {
+		console.log("Playing track num: ", currentTrackNum);
+		console.log("Updating playlist.");
 		var passedCurrent = false;
 		$('#playlist .songBlock').each(function(index, element) {
 			if (!passedCurrent && $(element).hasClass('currentTrack')) {
 				passedCurrent = true;
-				currentTrackNum = index;
+				currentTrackNum = index+1;
 				$(element).removeClass('faded');
 			} else {
-				$(element).removeClass('currentTrack');
 				if (passedCurrent) {
 					$(element).removeClass('faded');
 				} else {
@@ -123,6 +110,18 @@ SoundHub.PlaylistApp = function(){
 				}
 			}
 		});
+	};
+
+	PlaylistApp.makeThisTrackCurrent = function(songId) {
+		toBeCurrentTrack = $('#'+songId).parent();
+		if ($('.currentTrack')) {
+			$('.currentTrack').each(function(index,element) {
+				$(element).removeClass('currentTrack');
+			});
+		}
+		toBeCurrentTrack.addClass('currentTrack');
+		PlaylistApp.updatePlaylist();
+		SoundHub.AudioPlayer.updatePlayerButtons();
 	};
 
 	PlaylistApp.tracksCount = function() {

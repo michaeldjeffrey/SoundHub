@@ -30,11 +30,19 @@ SoundHub.SoundCloudAPI = function(){
 			SoundHub.ResultsApp.addSongs(tracks);
 		});
 	};
+	SoundCloudAPI.loadTrack = function(songId) {
+		SC.stream('/tracks/'+songId, function(sound) {
+			$("audio").attr('src', sound.url);
+			$("audio").attr('scid', songId);
+			SoundHub.PlaylistApp.makeThisTrackCurrent(songId);
+		});
+	} 
 	SoundCloudAPI.playSong = function(songId) {
 		SC.stream('/tracks/'+songId, function(sound) {
 			$("audio").attr('src', sound.url);
 			$("audio").attr('scid', songId);
 			SoundHub.AudioPlayer.togglePlayPause();
+			SoundHub.PlaylistApp.makeThisTrackCurrent(songId);
 		});
 	};
 

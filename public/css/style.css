@@ -5,8 +5,8 @@ ul{
 }
 
 body {
-	margin:0px;
-	padding:0px;
+	margin:0;
+	padding:0;
 	font-family:ubuntu;
 	background: #f0f0f0; /* Old browsers */
 	overflow:hidden;
@@ -17,9 +17,9 @@ body {
 	margin:auto;
 }
 hr.clear {
-	margin:0px;
-	padding:0px;
-	height:0px;
+	margin:0;
+	padding:0;
+	height:0;
 	background:transparent;
 	border:none;
 	clear:both;
@@ -33,12 +33,12 @@ header {
 #mainLogo {
 	background-image:url(../images/soundHUB_logo.png);
 	height:90px;
-	margin:0px 0px 0px 4px;
+	margin:0 0 0 4px;
 	width:192px;
 }
 header ul {
-	padding:0px;
-	margin:0px;
+	padding:0;
+	margin:0;
 }
 header ul.left {
 	float:left;
@@ -49,7 +49,7 @@ header ul.right {
 header li {
 	list-style:none;
 	display:inline;
-	margin:0px;
+	margin:0;
 }
 header a:link, header a:visited {
 	text-decoration:none;
@@ -87,16 +87,16 @@ aside {
 }
 #genre {
 	width:134px;
-	margin:0px;
-	border:0px;
+	margin:0;
+	border:0;
 	padding:3px;
 	border-radius:5px;
 }
 #getGenre, #getQuery {
-	margin:0px;
+	margin:0;
 	background:#333;
 	border-radius:3px;
-	border:0px;
+	border:0;
 	color:#999;
 	padding:3px;
 }
@@ -109,8 +109,8 @@ aside {
 	font-weight:normal;
 	text-transform:lowercase;
 	padding:8px;
-	margin:4px 0px 4px 4px;
-	box-shadow: inset 0px -10px 30px rgba(0,0,0,.1);
+	margin:4px 0 4px 4px;
+	box-shadow: inset 0 -10px 30px rgba(0,0,0,.1);
 	border-radius:10px;
 	border: 1px solid rgba(170, 170, 170, 0.5);
 	position: relative;
@@ -120,7 +120,7 @@ aside {
 }
 .genre_item:active{
 	background:rgba(180,180,180,.3);
-	box-shadow: inset 0px -10px 30px rgba(0,0,0,.2);
+	box-shadow: inset 0 -10px 30px rgba(0,0,0,.2);
 }
 #genreApp{
 	width: 355px;
@@ -158,7 +158,7 @@ aside {
 }
 aside span.current {
 	background:rgba(100,106,219,.7);
-	box-shadow: inset 0px -10px 30px rgba(0,0,0,.3);
+	box-shadow: inset 0 -10px 30px rgba(0,0,0,.3);
 	color:#fff;
 }
 #resultsApp {
@@ -171,8 +171,8 @@ aside span.current {
 	/*background: url("../images/Speaker-Picture.png") no-repeat top left;*/
 }
 #resultsList {
-	margin:0px;
-	padding:0px;
+	margin:0;
+	padding:0;
 }
 #resultsList li {
 	list-style: none;
@@ -193,11 +193,11 @@ aside span.current {
 }
 #resultsList img {
 	border-radius:5px;
-	box-shadow:0px 2px 5px rgba(0,0,0,.2);
+	box-shadow:0 2px 5px rgba(0,0,0,.2);
 	border:3px solid rgba(0,0,0,.3);
 	width:80px;
 	height:80px;
-	margin:15px 10px 0px 0px;
+	margin:15px 10px 0 0;
 }
 #resultsList h3 {
 	color:#444;
@@ -214,12 +214,12 @@ aside span.current {
 }
 #playlistApp {
 	position:fixed;
-	bottom:0px;
-	left:0px;
+	bottom:0;
+	left:0;
 	width:100%;
 	height:125px;
 	background:#222;
-	margin:0px;
+	margin:0;
 	padding:10px;
 	z-index: 9001 !important;
 }
@@ -233,10 +233,10 @@ aside span.current {
 	position: fixed;
 	height: 25px;
 	bottom: 145px;
-	left: 0px;
+	left: 0;
 	width: 100%;
 	background: #303030;
-	padding: 5px 0px;
+	padding: 5px 0;
 	margin:0;
 	z-index: 9001;
 }
@@ -250,7 +250,7 @@ aside span.current {
 	text-align:center;
 	padding:4px;
 	border-radius:3px;
-	margin:0px 5px;
+	margin:0 5px;
 	white-space: normal;
 	position: relative;
 }
@@ -277,13 +277,16 @@ aside span.current {
 .songBlock .icon-ellipsis-horizontal:hover {
 	color: rgba(250,250,250,1);
 }
+.songBlock.currentTrack .remove {
+	display:none;
+}
 .remove{
 	background: rgba(255, 0, 0, 0.2);
 	border-radius: 100%;
 	padding: 2px 7px;
 	position: absolute;
-	top: 0px;
-	right: 0px;
+	top: 0;
+	right: 0;
 	text-transform: uppercase;
 }
 .genre_item .remove{
@@ -328,19 +331,19 @@ i:active{
     width: 20px;
     height: 100px;
 }
-#audioPlayer .icon-volume-up {
+#audioPlayer .volume-wrapper {
 	position: relative;
 }
 #audioPlayer .volume_span{
 	position: absolute;
 	bottom: 25px;
-	left: -5px;
+	left: 7px;
 	display: inline-block;
 	padding: 2px;
 	background:#303030;
 	visibility: hidden;
 }
-#audioPlayer .icon-volume-up:hover .volume_span{
+#audioPlayer .volume-wrapper:hover .volume_span{
 	visibility: visible;
 }
 #audioPlayer #progressBar.ui-slider { 
@@ -381,16 +384,16 @@ i:active{
 }
 .genreAppInput{
 	width:134px;
-	margin:0px;
-	border:0px;
+	margin:0;
+	border:0;
 	padding:3px;
 	border-radius:5px;
 }
 .genreAppButton{
-	margin:0px;
+	margin:0;
 	background:#333;
 	border-radius:3px;
-	border:0px;
+	border:0;
 	color:#999;
 	padding:3px;
 }

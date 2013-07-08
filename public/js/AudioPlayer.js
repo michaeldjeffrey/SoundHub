@@ -2,178 +2,198 @@
 
 SoundHub.AudioPlayer = function(){
 
-var AudioPlayer = {};
-var audio = document.getElementById('audio-test');
-audio.controls = false;
+	var AudioPlayer = {};
+	var audio = document.getElementById('sh-html5-audio-player');
+	audio.controls = false;
+	var lastVolume = false;
+	var audioMuted = false;
 
-var playheadSteps = 1000;
+	AudioPlayer.repeatEnabled = false;
 
-$(audio).on('timeupdate', function(){
-  updateProgress();
-});
-$(audio).on('ended', function(){
-  try {
-    SoundHub.PlaylistApp.nextSong();
-  } catch(err) {
-    updateProgress();
-    AudioPlayer.updatePlayerButtons();
-  }
-});
+	var playheadSteps = 1000;
 
-$("#playpause").on('click', function(){
-  if (!$(this).attr('disabled')) {
-    AudioPlayer.togglePlayPause();
-    AudioPlayer.updatePlayerButtons();
-  }
-});
-$(".icon-step-backward").on('click', function(){
-  if (!$(this).attr('disabled')) {
-    SoundHub.PlaylistApp.previousSong();
-    AudioPlayer.updatePlayerButtons();
-  }
-});
-$(".icon-step-forward").on('click', function(){
-  if (!$(this).attr('disabled')) {
-    SoundHub.PlaylistApp.nextSong();
-    AudioPlayer.updatePlayerButtons();
-  }
-});
-$("#volume").on('change', function(){
-  AudioPlayer.setVolume();
-});
+	$(audio).on('timeupdate', function(){
+		updateProgress();
+	});
+	$(audio).on('ended', function(){
+		AudioPlayer.playNextTrack();
+	});
 
-AudioPlayer.togglePlayPause = function(){
-  if(audio.paused || audio.ended){
-    audio.play();
-  } else {
-    audio.pause();
-  }
-};
+	$("#playpause").on('click', function(){
+		if (!$(this).attr('disabled')) {
+			AudioPlayer.togglePlayPause();
+		}
+	});
+	$(".icon-step-backward").on('click', function(){
+		if (!$(this).attr('disabled')) {
+			AudioPlayer.playPreviousTrack();
+		}
+	});
+	$(".icon-step-forward").on('click', function(){
+		if (!$(this).attr('disabled')) {
+			AudioPlayer.playNextTrack();
+		}
+	});
+	$("#volume").on('change', function(){
+		AudioPlayer.setVolume();
+	});
+	$(".icon-volume-up").on('click', function() {
+		AudioPlayer.muteHandler();
+	});
 
-AudioPlayer.setVolume = function(){
-  var volume = document.getElementById('volume');
-  audio.volume = volume.value;
-};
+	AudioPlayer.togglePlayPause = function(){
+		if(audio.paused || audio.ended){
+			audio.play();
+		} else {
+			audio.pause();
+		}
+		AudioPlayer.updatePlayerButtons();
+	};
 
-function updateProgress(){
-  var value = 0;
-  if(audio.currentTime > 0 && audio.currentTime != audio.duration) {
-    value = Math.floor((playheadSteps / audio.duration) * audio.currentTime);
-    $("#progressBar").slider( "option", "value", value );
-    $("#progressBar").slider( "option", "disabled", false );
-  } else {
-    $("#progressBar").slider( "option", "value", 0 );
-    $("#progressBar").slider( "option", "disabled", true );
-  }
-  AudioPlayer.updatePlayerButtons();
-}
-AudioPlayer.updatePlayerButtons = function() {
-  var playpause = $('#playpause');
-  if(audio.paused || audio.ended){
-    playpause.attr('title', 'play');
-    playpause.attr('class', 'button icon icon-play');
-  } else {
-    playpause.attr('title', 'pause');
-    playpause.attr('class', 'button icon icon-pause');
-  }
+	AudioPlayer.setVolume = function(){
+		var volume = document.getElementById('volume');
+		audio.volume = volume.value;
+	};
+	AudioPlayer.muteHandler = function() {
+		var volume = document.getElementById('volume');
+		if (audioMuted) {
+			if (lastVolume) {
+				volume.value = lastVolume;
+			} else {
+				volume.value = 100;
+			}
+			lastVolume = false;
+			audioMuted = false;
+		} else {
+			lastVolume = volume.value;
+			volume.value = 0;
+			audioMuted = true;
+		}
+		AudioPlayer.setVolume();
+	};
 
-  if (SoundHub.PlaylistApp.tracksCount() > 0) {
-    playpause.removeAttr('disabled');
-  } else {
-    playpause.attr('disabled', 'disabled');
-  }
+	AudioPlayer.playNextTrack = function() {
+		if (AudioPlayer.repeatEnabled) {
+			if (SoundHub.PlaylistApp.nextTrackInPlaylist()) {
+				console.log("Playing next track.");
+				SoundHub.SoundCloudAPI.playSong(SoundHub.PlaylistApp.nextTrackInPlaylist());
+			} else {
+				console.log("Playing first track.");
+				SoundHub.SoundCloudAPI.playSong(SoundHub.PlaylistApp.firstTrackInPlaylist());
+			}
+		} else {
+			if (SoundHub.PlaylistApp.nextTrackInPlaylist()) {
+				console.log("Playing next track.");
+				SoundHub.SoundCloudAPI.playSong(SoundHub.PlaylistApp.nextTrackInPlaylist());
+			} else {
+				console.log("I guess we're all done, going to sleep....");
+				AudioPlayer.goToSleep();
+			}
+		}
+	};
 
-  var nextBtn = $('#audioPlayer .icon-step-forward');
-  var prevBtn = $('#audioPlayer .icon-step-backward');
+	AudioPlayer.playPreviousTrack = function() {
+		if (AudioPlayer.repeatEnabled) {
+			if (SoundHub.PlaylistApp.previousTrackInPlaylist()) {
+				console.log("Playing previous track.");
+				SoundHub.SoundCloudAPI.playSong(SoundHub.PlaylistApp.previousTrackInPlaylist());
+			} else {
+				console.log("Playing last track.");
+				SoundHub.SoundCloudAPI.playSong(SoundHub.PlaylistApp.lastTrackInPlaylist());
+			}
+		} else {
+			if (SoundHub.PlaylistApp.previousTrackInPlaylist()) {
+				console.log("Playing previous track.");
+				SoundHub.SoundCloudAPI.playSong(SoundHub.PlaylistApp.previousTrackInPlaylist());
+			} else {
+				console.log("I guess we're all done, going to sleep....");
+				AudioPlayer.goToSleep();
+			}
+		}
+	};
 
-  if (SoundHub.PlaylistApp.currentTrackNum() == 0) { // First track in playlist is currently playing.
-    prevBtn.attr('disabled', 'disabled');
-  } else {
-    prevBtn.removeAttr('disabled');
-  }
-  if (SoundHub.PlaylistApp.currentTrackNum() == SoundHub.PlaylistApp.tracksCount() - 1) { // Last track in playlist is currently playing.
-    nextBtn.attr('disabled', 'disabled');
-  } else {
-    nextBtn.removeAttr('disabled');
-  }
-}
+	AudioPlayer.goToSleep = function() {
+		SoundHub.SoundCloudAPI.loadTrack(SoundHub.PlaylistApp.firstTrackInPlaylist());
+	};
 
-// Progress bar (playhead) using jQuery UI:
-$(function() {
-    $("#progressBar").slider({
-        range: "min",
-        value: 0,
-        min: 1,
-        max: playheadSteps,
-        disabled: true,
-        slide: function(event, ui) {
-            $("#amount").val('$' + ui.value);
-            audio.currentTime = (ui.value / playheadSteps) * audio.duration;
-            audio.removeEventListener('timeupdate', updateProgress, false);
-        },
-        stop: function(event, ui) {
-          audio.addEventListener('timeupdate', updateProgress, false);
-        }
-    });
-    $("#amount").val('$' + $("#progressBar").slider("value"));
-});
-$(function() {
-   $("#progressBar .ui-slider-handle").button({
-     icons: {
-       primary: "ui-icon-grip-solid-vertical"
-     },
-     text: false
-   });
-});
+	function updateProgress(){
+		var value = 0;
+		if(audio.currentTime > 0 && audio.currentTime != audio.duration) {
+			value = Math.floor((playheadSteps / audio.duration) * audio.currentTime);
+			$("#progressBar").slider( "option", "value", value );
+			$("#progressBar").slider( "option", "disabled", false );
+		} else {
+			$("#progressBar").slider( "option", "value", 0 );
+			$("#progressBar").slider( "option", "disabled", true );
+		}
+	}
+	AudioPlayer.updatePlayerButtons = function() {
+		console.log("Updating player buttons.");
+		var playpause = $('#playpause');
+		if(audio.paused || audio.ended || SoundHub.PlaylistApp.currentTrackNum() == 0) {
+			console.log("Converting to playpause to play button.");
+			playpause.attr('title', 'play');
+			playpause.attr('class', 'button icon icon-play');
+		} else {
+			console.log("Converting to playpause to pause button.");
+			playpause.attr('title', 'pause');
+			playpause.attr('class', 'button icon icon-pause');
+		}
 
+		if (SoundHub.PlaylistApp.tracksCount() > 0) {
+			console.log("Enabling playpause button.");
+			playpause.removeAttr('disabled');
+		} else {
+			console.log("Disabling playpause button.");
+			playpause.attr('disabled', 'disabled');
+		}
 
-// $('#drag').each(function(){
-//   var $drag = $(this);
+		var nextBtn = $('#audioPlayer .icon-step-forward');
+		var prevBtn = $('#audioPlayer .icon-step-backward');
 
-//   $drag.on('mousedown', function(ev) {
-//     audio.removeEventListener('timeupdate', updateProgress, false);
-//     var $this = $( this );
-//     var $parent = $this.parent();
-//     var poffs = $parent.position();
-//     var pwidth = $parent.width();
-//     var ppwidth = $parent.parent().width();
+		if (SoundHub.PlaylistApp.currentTrackNum() === 1) {
+			console.log("Disabling previous-track button.");
+			prevBtn.attr('disabled', 'disabled');
+		} else {
+			console.log("Enabling previous-track button.");
+			prevBtn.removeAttr('disabled');
+		}
+		if (SoundHub.PlaylistApp.currentTrackNum() == SoundHub.PlaylistApp.tracksCount()) {
+			console.log("Disabling next-track button.");
+			nextBtn.attr('disabled', 'disabled');
+		} else {
+			console.log("Enabling next-track button.");
+			nextBtn.removeAttr('disabled');
+		}
+	};
 
-//     var x = ev.pageX;
-//     var y = ev.pageY;
+	$(function() {
+		$("#progressBar").slider({
+			range: "min",
+			value: 0,
+			min: 1,
+			max: playheadSteps,
+			disabled: true,
+			slide: function(event, ui) {
+				$("#amount").val('$' + ui.value);
+				audio.currentTime = (ui.value / playheadSteps) * audio.duration;
+				audio.removeEventListener('timeupdate', updateProgress, false);
+			},
+			stop: function(event, ui) {
+				audio.addEventListener('timeupdate', updateProgress, false);
+			}
+		});
+		$("#amount").val('$' + $("#progressBar").slider("value"));
+	});
+	$(function() {
+		$("#progressBar .ui-slider-handle").button({
+			icons: {
+				primary: "ui-icon-grip-solid-vertical"
+			},
+			text: false
+		});
+	});
 
-//     $this.parent();
-
-//     $(document).on('mousemove.dragging', function(ev){
-//       var mx = ev.pageX;
-//       var my = ev.pageY;
-
-//       var rx = mx - x;
-//       var ry = my - y;
-
-//       var value = Math.floor((100 / ppwidth) * (pwidth + rx));
-//       if (value > 100) {
-//         value = 100;
-//       }
-//       if (value < 0) {
-//         value = 0;
-//       }
-
-//       $parent.css({
-//         'width' : (pwidth + rx) + 'px'
-//       });
-//       console.log(rx);
-//       audio.currentTime = (value / 100) * audio.duration;
-//     }).on('mouseup.dragging mouseleave.dragging', function(ev){
-//       audio.addEventListener('timeupdate', updateProgress, false);
-//       $(document).off('.dragging');
-//     });
-//   });
-// });
-
-
-
-
-
-return AudioPlayer;
+	return AudioPlayer;
 
 }();

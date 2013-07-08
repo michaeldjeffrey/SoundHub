@@ -111,9 +111,10 @@
         <i class="button icon icon-step-backward" disabled="disabled"></i>
         <i class="button icon icon-play" id='playpause' disabled="disabled"></i>
         <i class="button icon icon-step-forward" disabled="disabled"></i>
-        <i class="button icon icon-volume-up">
+        <span class="volume-wrapper">
+          <i class="button icon icon-volume-up"></i>
           <span class='volume_span'><input id="volume" value='1' min="0" max='1' step='0.1' type='range' /></span>
-        </i>
+        </span>
       </div>
       <div id="longTermControls">
         <i class="button icon icon-random"></i>
@@ -123,7 +124,7 @@
     </div>
     <div id="playlistApp"></div>
   </div>
-  <audio id="audio-test"></audio>
+  <audio id="sh-html5-audio-player"></audio>
 
   <script src="https://connect.soundcloud.com/sdk.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
