@@ -25,9 +25,6 @@ SoundHub.ResultsApp = function(){
 		}
 	});
 
-
-
-
 	var ResultsView = Backbone.Marionette.CompositeView.extend({
 		initialize: function(){
 			genre = this.options.genre;

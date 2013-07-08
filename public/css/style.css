@@ -241,9 +241,9 @@ aside span.current {
 	z-index: 9001;
 }
 .songBlock {
+	float:left;
 	width:120px;
 	height: 120px;
-	display: inline-table;
 	background:#333;
 	color:#fff;
 	list-style:none;
@@ -252,6 +252,7 @@ aside span.current {
 	border-radius:3px;
 	margin:0px 5px;
 	white-space: normal;
+	position: relative;
 }
 .songBlock:hover .remove{
 	background: rgba(255, 0, 0, 0.5);
@@ -269,13 +270,20 @@ aside span.current {
 .songBlock .artist{
 	clear: both;
 }
+.songBlock .icon-ellipsis-horizontal {
+	margin: auto;
+	color: rgba(250,250,250,0.2);
+}
+.songBlock .icon-ellipsis-horizontal:hover {
+	color: rgba(250,250,250,1);
+}
 .remove{
 	background: rgba(255, 0, 0, 0.2);
 	border-radius: 100%;
 	padding: 2px 7px;
-	position: relative;
-	top: 0;
-	right: -50px;
+	position: absolute;
+	top: 0px;
+	right: 0px;
 	text-transform: uppercase;
 }
 .genre_item .remove{
@@ -405,6 +413,10 @@ i:active{
 #audioPlayer .button[disabled]:hover {
 	color: #111;
 }
+
+
+
+
 
 ::selection {
 	background: inherit !important;

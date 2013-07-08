@@ -16,26 +16,26 @@ $(audio).on('ended', function(){
     SoundHub.PlaylistApp.nextSong();
   } catch(err) {
     updateProgress();
-    updatePlayerButtons();
+    AudioPlayer.updatePlayerButtons();
   }
 });
 
 $("#playpause").on('click', function(){
   if (!$(this).attr('disabled')) {
     AudioPlayer.togglePlayPause();
-    updatePlayerButtons();
+    AudioPlayer.updatePlayerButtons();
   }
 });
 $(".icon-step-backward").on('click', function(){
   if (!$(this).attr('disabled')) {
     SoundHub.PlaylistApp.previousSong();
-    updatePlayerButtons();
+    AudioPlayer.updatePlayerButtons();
   }
 });
 $(".icon-step-forward").on('click', function(){
   if (!$(this).attr('disabled')) {
     SoundHub.PlaylistApp.nextSong();
-    updatePlayerButtons();
+    AudioPlayer.updatePlayerButtons();
   }
 });
 $("#volume").on('change', function(){
@@ -65,9 +65,9 @@ function updateProgress(){
     $("#progressBar").slider( "option", "value", 0 );
     $("#progressBar").slider( "option", "disabled", true );
   }
-  updatePlayerButtons();
+  AudioPlayer.updatePlayerButtons();
 }
-function updatePlayerButtons(){
+AudioPlayer.updatePlayerButtons = function() {
   var playpause = $('#playpause');
   if(audio.paused || audio.ended){
     playpause.attr('title', 'play');

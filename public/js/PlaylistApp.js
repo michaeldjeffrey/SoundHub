@@ -3,13 +3,13 @@ SoundHub.PlaylistApp = function(){
 	var PlaylistApp = {};
 	var currentTrackNum = 0;
 	var currentTrack = function(){
-		return tracks.at(currentTrackNum).get('id').toString();
+		return $('.currentTrack').children(':first').attr('id');
 	};
 	var nextTrack = function(){
-		return tracks.at(currentTrackNum + 1).get('id').toString();
+		return $('.currentTrack').next().children(':first').attr('id');
 	};
 	var previousTrack = function(){
-		return tracks.at(currentTrackNum - 1).get('id').toString();
+		return $('.currentTrack').prev().children(':first').attr('id');
 	};
 
 
@@ -27,15 +27,14 @@ SoundHub.PlaylistApp = function(){
 			'click .remove': 'removeSong'
 		},
 		play: function(e){
-			$("#"+currentTrack())
+			$('#'+currentTrack())
 			.parent()
 			.removeClass('currentTrack')
 			.addClass('faded');
-			SoundHub.SoundCloudAPI.playSong(this.model.id);
-			$("#"+this.model.id)
-			.parent()
-			.addClass('currentTrack')
-			.removeClass('faded');
+			$($(e.target).closest('.songBlock')[0])
+			.removeClass('faded')
+			.addClass('currentTrack');
+			SoundHub.SoundCloudAPI.playSong(currentTrack())
 			SoundHub.PlaylistApp.updatePlaylist();
 		},
 		removeSong: function(e){
@@ -51,35 +50,49 @@ SoundHub.PlaylistApp = function(){
 		itemView: TrackView
 	});
 
+	$(function() {
+		$('#playlist').sortable({
+			tolerance: "pointer",
+			handle: ".icon-ellipsis-horizontal",
+			stop: function(e,ui){
+				SoundHub.PlaylistApp.updatePlaylist();
+				SoundHub.AudioPlayer.updatePlayerButtons();
+			}
+		});
+	});
+
 	PlaylistApp.addSongToPlaylist = function(song){
 		tracks.add(song);
+		// play the first song that is added to the playlist
 		if(tracks.length === 1){
-			console.log('there is one track in the playlist');
 			$("#"+tracks.first().get('id')).parent().addClass('currentTrack');
 			SoundHub.SoundCloudAPI.playSong(tracks.first().get('id'));
 		}
 	};
 	PlaylistApp.nextSong = function(){
-		$("#"+currentTrack())
-		.parent()
-		.removeClass('currentTrack')
-		.addClass('faded');
 		$("#"+nextTrack())
 		.parent()
 		.addClass('currentTrack');
 		SoundHub.SoundCloudAPI.playSong(nextTrack());
-		currentTrackNum++;
-	};
-	PlaylistApp.previousSong = function(){
 		$("#"+currentTrack())
 		.parent()
-		.removeClass('currentTrack');
+		.removeClass('currentTrack')
+		.addClass('faded');
+		currentTrackNum++;
+		SoundHub.AudioPlayer.updatePlayerButtons();
+	};
+	PlaylistApp.previousSong = function(){
+		var cTrack = currentTrack();
 		$("#"+previousTrack())
 		.parent()
 		.removeClass('faded')
 		.addClass('currentTrack');
 		SoundHub.SoundCloudAPI.playSong(previousTrack());
+		$("#"+cTrack)
+		.parent()
+		.removeClass('currentTrack');
 		currentTrackNum--;
+		SoundHub.AudioPlayer.updatePlayerButtons();
 	};
 
 
