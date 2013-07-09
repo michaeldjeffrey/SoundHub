@@ -149,6 +149,9 @@ SoundHub.AudioPlayer = function(){
 
 	AudioPlayer.updateProgress = function(){
 		var value = 0;
+		code = Math.max(Math.min(Math.round((AudioPlayer.audio.eqData[64]+AudioPlayer.audio.eqData[42]+AudioPlayer.audio.eqData[128]+AudioPlayer.audio.eqData[222]+AudioPlayer.audio.eqData[77]+AudioPlayer.audio.eqData[192])*10000000), 999999), 100000);
+		$('input').css('background', '#'+code);
+		console.log(code);
 		if(AudioPlayer.audio.position > 0 && AudioPlayer.audio.position != AudioPlayer.audio.durationEstimate) {
 			value = Math.floor((playheadSteps / AudioPlayer.audio.durationEstimate) * AudioPlayer.audio.position);
 			$("#progressBar").slider( "option", "value", value );

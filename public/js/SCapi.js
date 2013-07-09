@@ -32,7 +32,10 @@ SoundHub.SoundCloudAPI = function(){
 	};
 	SoundCloudAPI.loadTrack = function(songId) {
 		SC.streamStopAll();
-		SoundHub.AudioPlayer.audio = SC.stream('/tracks/'+songId);
+		SoundHub.AudioPlayer.audio = SC.stream('/tracks/'+songId, {
+			useEQData: true,
+			usePeakData: true
+		});
 		SoundHub.AudioPlayer.audio.play({
 			whileplaying: function() {
 				SoundHub.AudioPlayer.updateProgress();
@@ -47,7 +50,10 @@ SoundHub.SoundCloudAPI = function(){
 	};
 	SoundCloudAPI.playTrack = function(songId) {
 		SC.streamStopAll();
-		SoundHub.AudioPlayer.audio = SC.stream('/tracks/'+songId);
+		SoundHub.AudioPlayer.audio = SC.stream('/tracks/'+songId, { 
+			useEQData: true,
+			usePeakData: true
+		});
 		SoundHub.AudioPlayer.audio.play({
 			whileplaying: function() {
 				SoundHub.AudioPlayer.updateProgress();
