@@ -62,7 +62,10 @@
 <span class='artist'>by {{artist}}</span>
 </h3>
 <div class='button addToPlaylist' data-id='{{id}}' data-title='{{title}}' data-albumart='{{albumArt}}'>add to playlist</div>
-<div class='listens'>{{listens}} listens</div><hr class='clear'/>
+<div class='listens'>{{listens}} listens
+<div><a target="_soundcloud" href='{{soundcloudWebURL}}'><img src="images/soundcloud-logo.png"></a></div>
+<div class="waveformImageWrapper"><span class="duration">{{duration}}</span><img width="100%" src="{{waveformImageURL}}" /></div>
+</div><hr class='clear'/>
 </script>
 <!-- ================================= -->
 
@@ -87,6 +90,7 @@
     <header>
       <ul class="left">
         <div id="mainLogo"></div>
+        <div id="poweredBySoundCloudLogo"></div>
       </ul>
       <ul class="right">
         <div id="search">
@@ -111,14 +115,14 @@
         <i class="button icon icon-step-backward" disabled="disabled"></i>
         <i class="button icon icon-play" id='playpause' disabled="disabled"></i>
         <i class="button icon icon-step-forward" disabled="disabled"></i>
-        <span class="volume-wrapper">
-          <i class="button icon icon-volume-up"></i>
-          <span class="volume-slider-wrapper"><span class='volume-slider'></span></span>
-        </span>
       </div>
       <div id="longTermControls">
         <i class="button icon icon-random" status="inactive"></i>
         <i class="button icon icon-repeat" status="inactive"></i>
+        <span class="volume-wrapper">
+          <i class="button icon mute-icon icon-volume-up"></i>
+          <span class="volume-slider-wrapper"><span class='volume-slider'></span></span>
+        </span>
       </div>
       <div id="progressBar"></div>
     </div>
@@ -130,6 +134,7 @@
   <script src="js/libs/underscore.js"></script>
   <script src="js/libs/backbone.js"></script>
   <script src="js/libs/marionette.js"></script>
+  <script src="http://cdnjs.cloudflare.com/ajax/libs/gsap/1.10.0/TweenMax.min.js"></script>
   <script src="http://code.jquery.com/ui/1.10.3/jquery-ui.js"></script>
   <script src="js/libs/jquery.hoverintent.js"></script>
   <script src="js/libs/jquery.shuffle.js"></script>

@@ -58,7 +58,10 @@ SoundHub.ResultsApp = function(){
 				artist: tracks[i].user.username,
 				id: tracks[i].id,
 				albumArt: tracks[i].artwork_url,
-				listens: tracks[i].playback_count
+				listens: tracks[i].playback_count,
+				soundcloudWebURL: tracks[i].permalink_url,
+				waveformImageURL: tracks[i].waveform_url,
+				duration: tracks[i].duration
 			});
 		});
 		return list;

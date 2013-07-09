@@ -26,7 +26,7 @@ SoundHub.AudioPlayer = function(){
 			AudioPlayer.playNextTrack();
 		}
 	});
-	$(".icon-volume-up").on('click', function() {
+	$("#audioPlayer .volume-wrapper").on('click', function() {
 		AudioPlayer.muteHandler();
 	});
 
@@ -49,7 +49,12 @@ SoundHub.AudioPlayer = function(){
 	AudioPlayer.setVolume = function(){
 		var volume = $('.volume-slider').slider('option', 'value');
 		console.log("Setting volume to: ", volume);
-		AudioPlayer.audio.setVolume(volume);
+		try {
+			AudioPlayer.audio.setVolume(volume);
+		} catch (error) {
+			//
+		}
+		AudioPlayer.updatePlayerButtons();
 	};
 	AudioPlayer.muteHandler = function() {
 		var currentVolumeLevel = $('.volume-slider').slider('option', 'value');
@@ -67,7 +72,7 @@ SoundHub.AudioPlayer = function(){
 			newVolumeLevel = 0;
 			audioMuted = true;
 		}
-		$('.volume-slider').slider('option', 'value', newVolumeLevel);
+		$('.volume-slider').slider('value', newVolumeLevel);
 		AudioPlayer.setVolume();
 	};
 	AudioPlayer.shuffleButtonHandler = function(e) {
@@ -157,7 +162,7 @@ SoundHub.AudioPlayer = function(){
 		console.log("Updating player buttons.");
 		var playpause = $('#playpause');
 		if(AudioPlayer.audio.paused || SoundHub.PlaylistApp.currentTrackNum() === 0) {
-			console.log("Converting to playpause to play button.");
+			console.log("Converting  playpause to play button.");
 			playpause.attr('title', 'play');
 			playpause.attr('class', 'button icon icon-play');
 		} else {
@@ -177,19 +182,47 @@ SoundHub.AudioPlayer = function(){
 		var nextBtn = $('#audioPlayer .icon-step-forward');
 		var prevBtn = $('#audioPlayer .icon-step-backward');
 
-		if (SoundHub.PlaylistApp.currentTrackNum() === 1 && !AudioPlayer.repeatEnabled) {
+		console.log(SoundHub.PlaylistApp.tracksCount());
+		if (SoundHub.PlaylistApp.currentTrackNum() === 1 || SoundHub.PlaylistApp.tracksCount() === 0) {
 			console.log("Disabling previous-track button.");
 			prevBtn.attr('disabled', 'disabled');
 		} else {
 			console.log("Enabling previous-track button.");
 			prevBtn.removeAttr('disabled');
 		}
-		if (SoundHub.PlaylistApp.currentTrackNum() == SoundHub.PlaylistApp.tracksCount()  && !AudioPlayer.repeatEnabled) {
+		if (SoundHub.PlaylistApp.currentTrackNum() == SoundHub.PlaylistApp.tracksCount()) {
 			console.log("Disabling next-track button.");
 			nextBtn.attr('disabled', 'disabled');
 		} else {
 			console.log("Enabling next-track button.");
 			nextBtn.removeAttr('disabled');
+		}
+
+		if (AudioPlayer.repeatEnabled) {
+			if (SoundHub.PlaylistApp.tracksCount() > 0) {
+				prevBtn.removeAttr('disabled');
+				nextBtn.removeAttr('disabled');
+			}
+		}
+
+		var muteBtn = $('#audioPlayer .mute-icon');
+		var curVol = $('.volume-slider').slider('option', 'value');
+		if (curVol < 55) {
+			$(muteBtn).removeClass('icon-volume-up')
+			.removeClass('icon-volume-off')
+			.addClass('icon-volume-down')
+			.attr('status', 'active');
+		} else {
+			$(muteBtn).removeClass('icon-volume-down')
+			.removeClass('icon-volume-off')
+			.addClass('icon-volume-up')
+			.attr('status', 'active');
+		}
+		if (audioMuted || curVol === 0) {
+			$(muteBtn).removeClass('icon-volume-up')
+			.removeClass('icon-volume-down')
+			.addClass('icon-volume-off')
+			.attr('status', 'inactive');
 		}
 	};
 
@@ -216,7 +249,7 @@ SoundHub.AudioPlayer = function(){
 			},
 			text: false
 		});
-		$(".volume-slider").slider({
+		volumeSlider = $(".volume-slider").slider({
 			orientation: "vertical",
 			value: 100,
 			range: 'min',
@@ -224,14 +257,20 @@ SoundHub.AudioPlayer = function(){
 			max: 100,
 			change: function () {
 				AudioPlayer.setVolume();
+			},
+			slide: function() {
+				AudioPlayer.setVolume();
 			}
 		});
+		volumeSlider.find(".ui-slider-handle")
+		.wrap("<div class='ui-handle-helper-parent'></div>");
+
 		$(".volume-wrapper").hoverIntent({
 			over: function() {
-				$(".volume-slider").fadeIn('fast');
+				$(".volume-slider-wrapper").fadeIn('fast');
 			},
 			out: function() {
-				$(".volume-slider").fadeOut('fast');
+				$(".volume-slider-wrapper").fadeOut('fast');
 			},
 			timeout:500
 		});

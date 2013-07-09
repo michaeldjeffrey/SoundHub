@@ -34,14 +34,6 @@ SoundHub.PlaylistApp = function(){
 	});
 
 	$(function() {
-		$('#playlist').sortable({
-			revert: 77,
-			tolerance: "pointer",
-			stop: function(e,ui){
-				PlaylistApp.updatePlaylist();
-				SoundHub.AudioPlayer.updatePlayerButtons();
-			}
-		});
 	});
 
 	PlaylistApp.currentTrackInPlaylist = function(){
@@ -95,6 +87,16 @@ SoundHub.PlaylistApp = function(){
 		});
 
 		SoundHub.playlistApp.show(tracksView);
+
+		$('#playlist').sortable({
+			revert: 77,
+			tolerance: "pointer",
+			stop: function(e,ui){
+				PlaylistApp.updatePlaylist();
+				SoundHub.AudioPlayer.updatePlayerButtons();
+			}
+		});
+
 	};
 	PlaylistApp.updatePlaylist = function() {
 		console.log("Playing track num: ", currentTrackNum);
