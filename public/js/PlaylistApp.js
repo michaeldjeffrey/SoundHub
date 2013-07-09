@@ -35,6 +35,7 @@ SoundHub.PlaylistApp = function(){
 
 	$(function() {
 		$('#playlist').sortable({
+			revert: 77,
 			tolerance: "pointer",
 			stop: function(e,ui){
 				PlaylistApp.updatePlaylist();
@@ -85,7 +86,9 @@ SoundHub.PlaylistApp = function(){
 	};
 
 	PlaylistApp.initializeLayout = function(options){
-		tracks = new Tracks();
+		if (!tracks) {
+			tracks = new Tracks();
+		}
 
 		var tracksView = new TracksView({
 			collection: tracks
@@ -106,7 +109,11 @@ SoundHub.PlaylistApp = function(){
 				if (passedCurrent) {
 					$(element).removeClass('faded');
 				} else {
-					$(element).addClass('faded');
+					if (!SoundHub.AudioPlayer.repeatEnabled) {
+						$(element).addClass('faded');
+					} else {
+						$(element).removeClass('faded');
+					}
 				}
 			}
 		});

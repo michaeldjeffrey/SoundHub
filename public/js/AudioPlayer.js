@@ -6,9 +6,7 @@ SoundHub.AudioPlayer = function(){
 	AudioPlayer.audio = SC.stream('');
 	var lastVolume = false;
 	var audioMuted = false;
-	var shuffleEnabled = false;
-	var repeatEnabled = false;
-
+	AudioPlayer.shuffleEnabled = false;
 	AudioPlayer.repeatEnabled = false;
 
 	var playheadSteps = 1000;
@@ -73,23 +71,32 @@ SoundHub.AudioPlayer = function(){
 		AudioPlayer.setVolume();
 	};
 	AudioPlayer.shuffleButtonHandler = function(e) {
-		if (shuffleEnabled) {
-			shuffleEnabled = false;
+		if (AudioPlayer.shuffleEnabled) {
+			AudioPlayer.shuffleEnabled = false;
 			$(e.target).attr('status', 'inactive');
+			SoundHub.PlaylistApp.initializeLayout();
 		} else {
-			shuffleEnabled = true;
+			AudioPlayer.shuffleEnabled = true;
+			$("#playlist").shuffle();
 			$(e.target).attr('status', 'active');
 		}
-	}
+		if (SoundHub.PlaylistApp.firstTrackInPlaylist()) {
+			SoundHub.SoundCloudAPI.playTrack(SoundHub.PlaylistApp.firstTrackInPlaylist());
+		}
+		AudioPlayer.updatePlayerButtons();
+		SoundHub.PlaylistApp.updatePlaylist();
+	};
 	AudioPlayer.repeatButtonHandler = function(e) {
-		if (repeatEnabled) {
-			repeatEnabled = false;
+		if (AudioPlayer.repeatEnabled) {
+			AudioPlayer.repeatEnabled = false;
 			$(e.target).attr('status', 'inactive');
 		} else {
-			repeatEnabled = true;
+			AudioPlayer.repeatEnabled = true;
 			$(e.target).attr('status', 'active');
 		}
-	}
+		AudioPlayer.updatePlayerButtons();
+		SoundHub.PlaylistApp.updatePlaylist();
+	};
 
 	AudioPlayer.playNextTrack = function() {
 		if (AudioPlayer.repeatEnabled) {
@@ -170,14 +177,14 @@ SoundHub.AudioPlayer = function(){
 		var nextBtn = $('#audioPlayer .icon-step-forward');
 		var prevBtn = $('#audioPlayer .icon-step-backward');
 
-		if (SoundHub.PlaylistApp.currentTrackNum() === 1) {
+		if (SoundHub.PlaylistApp.currentTrackNum() === 1 && !AudioPlayer.repeatEnabled) {
 			console.log("Disabling previous-track button.");
 			prevBtn.attr('disabled', 'disabled');
 		} else {
 			console.log("Enabling previous-track button.");
 			prevBtn.removeAttr('disabled');
 		}
-		if (SoundHub.PlaylistApp.currentTrackNum() == SoundHub.PlaylistApp.tracksCount()) {
+		if (SoundHub.PlaylistApp.currentTrackNum() == SoundHub.PlaylistApp.tracksCount()  && !AudioPlayer.repeatEnabled) {
 			console.log("Disabling next-track button.");
 			nextBtn.attr('disabled', 'disabled');
 		} else {
