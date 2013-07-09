@@ -18,7 +18,7 @@ SoundHub.PlaylistApp = function(){
 		},
 		play: function(e){
 			songId = $(e.target).closest('.songBlock').children(':first').attr('id');
-			SoundHub.SoundCloudAPI.playSong(songId);
+			SoundHub.SoundCloudAPI.playTrack(songId);
 		},
 		removeSong: function(e){
 			console.log('remove called');
@@ -78,7 +78,7 @@ SoundHub.PlaylistApp = function(){
 		tracks.add(song);
 		if(tracks.length === 1){
 			$("#"+tracks.first().get('id')).parent().addClass('currentTrack');
-			SoundHub.SoundCloudAPI.playSong(tracks.first().get('id'));
+			SoundHub.SoundCloudAPI.playTrack(tracks.first().get('id'));
 		}
 		PlaylistApp.updatePlaylist();
 		SoundHub.AudioPlayer.updatePlayerButtons();

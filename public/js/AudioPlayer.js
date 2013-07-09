@@ -3,8 +3,7 @@
 SoundHub.AudioPlayer = function(){
 
 	var AudioPlayer = {};
-	var audio = document.getElementById('sh-html5-audio-player');
-	audio.controls = false;
+	AudioPlayer.audio = SC.stream('');
 	var lastVolume = false;
 	var audioMuted = false;
 	var shuffleEnabled = false;
@@ -13,13 +12,6 @@ SoundHub.AudioPlayer = function(){
 	AudioPlayer.repeatEnabled = false;
 
 	var playheadSteps = 1000;
-
-	$(audio).on('timeupdate', function(){
-		updateProgress();
-	});
-	$(audio).on('ended', function(){
-		AudioPlayer.playNextTrack();
-	});
 
 	$("#playpause").on('click', function(){
 		if (!$(this).attr('disabled')) {
@@ -36,9 +28,6 @@ SoundHub.AudioPlayer = function(){
 			AudioPlayer.playNextTrack();
 		}
 	});
-	$("#volume").on('change', function(){
-		AudioPlayer.setVolume();
-	});
 	$(".icon-volume-up").on('click', function() {
 		AudioPlayer.muteHandler();
 	});
@@ -51,33 +40,36 @@ SoundHub.AudioPlayer = function(){
 	});
 
 	AudioPlayer.togglePlayPause = function(){
-		if(audio.paused || audio.ended){
-			audio.play();
+		if(AudioPlayer.audio.paused || AudioPlayer.audio.playState === 0){
+			AudioPlayer.audio.play();
 		} else {
-			audio.pause();
+			AudioPlayer.audio.pause();
 		}
 		AudioPlayer.updatePlayerButtons();
 	};
 
 	AudioPlayer.setVolume = function(){
-		var volume = document.getElementById('volume');
-		audio.volume = volume.value;
+		var volume = $('.volume-slider').slider('option', 'value');
+		console.log("Setting volume to: ", volume);
+		AudioPlayer.audio.setVolume(volume);
 	};
 	AudioPlayer.muteHandler = function() {
-		var volume = document.getElementById('volume');
+		var currentVolumeLevel = $('.volume-slider').slider('option', 'value');
+		var newVolumeLevel = 0;
 		if (audioMuted) {
 			if (lastVolume) {
-				volume.value = lastVolume;
+				newVolumeLevel = lastVolume;
 			} else {
-				volume.value = 100;
+				newVolumeLevel = 100;
 			}
 			lastVolume = false;
 			audioMuted = false;
 		} else {
-			lastVolume = volume.value;
-			volume.value = 0;
+			lastVolume = currentVolumeLevel;
+			newVolumeLevel = 0;
 			audioMuted = true;
 		}
+		$('.volume-slider').slider('option', 'value', newVolumeLevel);
 		AudioPlayer.setVolume();
 	};
 	AudioPlayer.shuffleButtonHandler = function(e) {
@@ -103,15 +95,15 @@ SoundHub.AudioPlayer = function(){
 		if (AudioPlayer.repeatEnabled) {
 			if (SoundHub.PlaylistApp.nextTrackInPlaylist()) {
 				console.log("Playing next track.");
-				SoundHub.SoundCloudAPI.playSong(SoundHub.PlaylistApp.nextTrackInPlaylist());
+				SoundHub.SoundCloudAPI.playTrack(SoundHub.PlaylistApp.nextTrackInPlaylist());
 			} else {
 				console.log("Playing first track.");
-				SoundHub.SoundCloudAPI.playSong(SoundHub.PlaylistApp.firstTrackInPlaylist());
+				SoundHub.SoundCloudAPI.playTrack(SoundHub.PlaylistApp.firstTrackInPlaylist());
 			}
 		} else {
 			if (SoundHub.PlaylistApp.nextTrackInPlaylist()) {
 				console.log("Playing next track.");
-				SoundHub.SoundCloudAPI.playSong(SoundHub.PlaylistApp.nextTrackInPlaylist());
+				SoundHub.SoundCloudAPI.playTrack(SoundHub.PlaylistApp.nextTrackInPlaylist());
 			} else {
 				console.log("I guess we're all done, going to sleep....");
 				AudioPlayer.goToSleep();
@@ -123,15 +115,15 @@ SoundHub.AudioPlayer = function(){
 		if (AudioPlayer.repeatEnabled) {
 			if (SoundHub.PlaylistApp.previousTrackInPlaylist()) {
 				console.log("Playing previous track.");
-				SoundHub.SoundCloudAPI.playSong(SoundHub.PlaylistApp.previousTrackInPlaylist());
+				SoundHub.SoundCloudAPI.playTrack(SoundHub.PlaylistApp.previousTrackInPlaylist());
 			} else {
 				console.log("Playing last track.");
-				SoundHub.SoundCloudAPI.playSong(SoundHub.PlaylistApp.lastTrackInPlaylist());
+				SoundHub.SoundCloudAPI.playTrack(SoundHub.PlaylistApp.lastTrackInPlaylist());
 			}
 		} else {
 			if (SoundHub.PlaylistApp.previousTrackInPlaylist()) {
 				console.log("Playing previous track.");
-				SoundHub.SoundCloudAPI.playSong(SoundHub.PlaylistApp.previousTrackInPlaylist());
+				SoundHub.SoundCloudAPI.playTrack(SoundHub.PlaylistApp.previousTrackInPlaylist());
 			} else {
 				console.log("I guess we're all done, going to sleep....");
 				AudioPlayer.goToSleep();
@@ -143,10 +135,10 @@ SoundHub.AudioPlayer = function(){
 		SoundHub.SoundCloudAPI.loadTrack(SoundHub.PlaylistApp.firstTrackInPlaylist());
 	};
 
-	function updateProgress(){
+	AudioPlayer.updateProgress = function(){
 		var value = 0;
-		if(audio.currentTime > 0 && audio.currentTime != audio.duration) {
-			value = Math.floor((playheadSteps / audio.duration) * audio.currentTime);
+		if(AudioPlayer.audio.position > 0 && AudioPlayer.audio.position != AudioPlayer.audio.durationEstimate) {
+			value = Math.floor((playheadSteps / AudioPlayer.audio.durationEstimate) * AudioPlayer.audio.position);
 			$("#progressBar").slider( "option", "value", value );
 			$("#progressBar").slider( "option", "disabled", false );
 		} else {
@@ -157,12 +149,12 @@ SoundHub.AudioPlayer = function(){
 	AudioPlayer.updatePlayerButtons = function() {
 		console.log("Updating player buttons.");
 		var playpause = $('#playpause');
-		if(audio.paused || audio.ended || SoundHub.PlaylistApp.currentTrackNum() == 0) {
+		if(AudioPlayer.audio.paused || SoundHub.PlaylistApp.currentTrackNum() === 0) {
 			console.log("Converting to playpause to play button.");
 			playpause.attr('title', 'play');
 			playpause.attr('class', 'button icon icon-play');
 		} else {
-			console.log("Converting to playpause to pause button.");
+			console.log("Converting playpause to pause button.");
 			playpause.attr('title', 'pause');
 			playpause.attr('class', 'button icon icon-pause');
 		}
@@ -203,11 +195,9 @@ SoundHub.AudioPlayer = function(){
 			disabled: true,
 			slide: function(event, ui) {
 				$("#amount").val('$' + ui.value);
-				audio.currentTime = (ui.value / playheadSteps) * audio.duration;
-				audio.removeEventListener('timeupdate', updateProgress, false);
+				AudioPlayer.audio.setPosition((ui.value / playheadSteps) * AudioPlayer.audio.durationEstimate);
 			},
 			stop: function(event, ui) {
-				audio.addEventListener('timeupdate', updateProgress, false);
 			}
 		});
 		$("#amount").val('$' + $("#progressBar").slider("value"));
@@ -219,6 +209,26 @@ SoundHub.AudioPlayer = function(){
 			},
 			text: false
 		});
+		$(".volume-slider").slider({
+			orientation: "vertical",
+			value: 100,
+			range: 'min',
+			min: 0,
+			max: 100,
+			change: function () {
+				AudioPlayer.setVolume();
+			}
+		});
+		$(".volume-wrapper").hoverIntent({
+			over: function() {
+				$(".volume-slider").fadeIn('fast');
+			},
+			out: function() {
+				$(".volume-slider").fadeOut('fast');
+			},
+			timeout:500
+		});
+
 	});
 
 	return AudioPlayer;

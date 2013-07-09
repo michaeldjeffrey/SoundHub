@@ -326,25 +326,22 @@ i:active{
 	float: left;
 	width: 170px !important;
 }
-#audioPlayer #volume {
-    -webkit-appearance: slider-vertical;
+#audioPlayer .volume-slider {
     width: 20px;
     height: 100px;
 }
 #audioPlayer .volume-wrapper {
 	position: relative;
 }
-#audioPlayer .volume_span{
+#audioPlayer .volume-slider{
 	position: absolute;
 	bottom: 25px;
 	left: 7px;
-	display: inline-block;
-	padding: 2px;
 	background:#303030;
-	visibility: hidden;
+	display:none;
 }
-#audioPlayer .volume-wrapper:hover .volume_span{
-	visibility: visible;
+#audioPlayer .volume-slider .ui-slider-range {
+	background: #DD3841;
 }
 #audioPlayer #progressBar.ui-slider { 
 	border:1px solid rgba(250,250,250,0.1); 
@@ -360,7 +357,7 @@ i:active{
 	width: 10px;
 }
 #audioPlayer #progressBar .ui-slider-range{
-	background: #4C7F8C;
+	background: #DD3841;
 }
 
 #audioPlayer #longTermControls {
@@ -376,7 +373,7 @@ i:active{
 	opacity: .2;
 }
 .currentTrack{
-	background: #4C7F8C;
+	background: #DD3841;
 }
 
 #genres_list, #playlists_list{

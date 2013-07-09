@@ -31,19 +31,33 @@ SoundHub.SoundCloudAPI = function(){
 		});
 	};
 	SoundCloudAPI.loadTrack = function(songId) {
-		SC.stream('/tracks/'+songId, function(sound) {
-			$("audio").attr('src', sound.url);
-			$("audio").attr('scid', songId);
-			SoundHub.PlaylistApp.makeThisTrackCurrent(songId);
+		SC.streamStopAll();
+		SoundHub.AudioPlayer.audio = SC.stream('/tracks/'+songId);
+		SoundHub.AudioPlayer.audio.play({
+			whileplaying: function() {
+				SoundHub.AudioPlayer.updateProgress();
+			},
+			onfinish: function() {
+				SoundHub.AudioPlayer.playNextTrack();
+			}
 		});
-	} 
-	SoundCloudAPI.playSong = function(songId) {
-		SC.stream('/tracks/'+songId, function(sound) {
-			$("audio").attr('src', sound.url);
-			$("audio").attr('scid', songId);
-			SoundHub.AudioPlayer.togglePlayPause();
-			SoundHub.PlaylistApp.makeThisTrackCurrent(songId);
+		SoundHub.AudioPlayer.audio.pause();
+		SoundHub.AudioPlayer.audio.setVolume($('.volume-slider').slider('option', 'value'));
+		SoundHub.PlaylistApp.makeThisTrackCurrent(songId);
+	};
+	SoundCloudAPI.playTrack = function(songId) {
+		SC.streamStopAll();
+		SoundHub.AudioPlayer.audio = SC.stream('/tracks/'+songId);
+		SoundHub.AudioPlayer.audio.play({
+			whileplaying: function() {
+				SoundHub.AudioPlayer.updateProgress();
+			},
+			onfinish: function() {
+				SoundHub.AudioPlayer.playNextTrack();
+			}
 		});
+		SoundHub.AudioPlayer.audio.setVolume($('.volume-slider').slider('option', 'value'));
+		SoundHub.PlaylistApp.makeThisTrackCurrent(songId);
 	};
 
 	return SoundCloudAPI;
