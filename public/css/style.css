@@ -442,6 +442,7 @@ i:active{
 }
 #audioPlayer .button[disabled]:hover {
 }
+
 #longTermControls .button {
 	color: #DD3841;
 }
