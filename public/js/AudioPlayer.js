@@ -157,6 +157,8 @@ SoundHub.AudioPlayer = function(){
 			$("#progressBar").slider( "option", "value", 0 );
 			$("#progressBar").slider( "option", "disabled", true );
 		}
+		$("#progressBar").progressbar("destroy");
+
 	}
 	AudioPlayer.updatePlayerButtons = function() {
 		console.log("Updating player buttons.");
