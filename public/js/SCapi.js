@@ -58,6 +58,7 @@ SoundHub.SoundCloudAPI = function(){
 		});
 		SoundHub.AudioPlayer.audio.setVolume($('.volume-slider').slider('option', 'value'));
 		SoundHub.PlaylistApp.makeThisTrackCurrent(songId);
+		$("#progressBar").slider("value", 0);
 		$("#progressBar").progressbar({
 			value: false
 		});

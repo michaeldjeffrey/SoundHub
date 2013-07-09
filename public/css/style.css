@@ -216,6 +216,8 @@ aside span.current {
 	color:#646adb;
 }
 #playlistApp {
+	overflow-y: hidden;
+	overflow-x: scroll;
 	position:fixed;
 	bottom:0;
 	left:0;
@@ -244,7 +246,7 @@ aside span.current {
 	z-index: 9001;
 }
 .songBlock {
-	float:left;
+	display: inline-table;
 	width:120px;
 	height: 120px;
 	background:#333;
