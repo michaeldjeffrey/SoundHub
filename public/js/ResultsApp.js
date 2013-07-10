@@ -16,12 +16,11 @@ SoundHub.ResultsApp = function(){
 		tagName: 'li',
 		className: 'songItem',
 		events:{
-			'click .addToPlaylist': 'addToPlaylist'
+			'click': 'addToPlaylist'
 		},
 		addToPlaylist: function(e){
 			SoundHub.PlaylistApp.addSongToPlaylist(this.model);
 			saveTask_localStorage(this.model);
-			$(e.currentTarget).addClass('faded');
 		}
 	});
 
@@ -56,7 +55,7 @@ SoundHub.ResultsApp = function(){
 			list[i] = new Result({
 				title: tracks[i].title,
 				artist: tracks[i].user.username,
-				id: tracks[i].id,
+				soundcloudid: tracks[i].id,
 				albumArt: tracks[i].artwork_url,
 				listens: tracks[i].playback_count,
 				soundcloudWebURL: tracks[i].permalink_url,
@@ -65,7 +64,6 @@ SoundHub.ResultsApp = function(){
 			});
 		});
 		return list;
-
 	};
 
 	ResultsApp.addSongs = function(tracks){

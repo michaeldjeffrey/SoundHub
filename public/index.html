@@ -61,7 +61,7 @@
 <span class='title'>{{title}}</span>
 <span class='artist'>by {{artist}}</span>
 </h3>
-<div class='button addToPlaylist' data-id='{{id}}' data-title='{{title}}' data-albumart='{{albumArt}}'>add to playlist</div>
+<div class='button addToPlaylist' data-id='{{soundcloudid}}' data-title='{{title}}' data-albumart='{{albumArt}}'>add to playlist</div>
 <div class='listens'>{{listens}} listens
 <div><a target="_soundcloud" href='{{soundcloudWebURL}}'><img src="images/soundcloud-logo.png"></a></div>
 <div class="waveformImageWrapper"><span class="duration">{{duration}}</span><img width="100%" src="{{waveformImageURL}}" /></div>
@@ -73,9 +73,9 @@
 </script>
 
 <script type="text/template" id='tracks_item_template'>
-<div id='{{id}}'>
+<div soundcloudid='{{soundcloudid}}'>
 <span class='button remove'>X</span>
-<div class="icon icon-ellipsis-horizontal"></div>
+<div class="handle icon icon-ellipsis-horizontal"></div>
 <div class="albumArt"><img src="{{albumArt}}" ></div>
 <span class="title">{{title}}</span>
 </div>
@@ -130,7 +130,9 @@
       </div>
       <div id="progressBar"></div>
     </div>
-    <div id="playlistApp"></div>
+    <div id="playlistApp">
+      <div id="playlistWrap"></div>
+    </div>
   </div>
 
   <script src="https://connect.soundcloud.com/sdk.js"></script>

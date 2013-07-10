@@ -3,7 +3,9 @@ SoundHub.PlaylistApp = function(){
 	var PlaylistApp = {};
 	var currentTrackNum = 0;
 
-	var Track = Backbone.Model.extend({});
+	var Track = Backbone.Model.extend({
+		idAttribute: "_id"
+	});
 	var Tracks = Backbone.Collection.extend({
 		model: Track
 	});
@@ -13,11 +15,11 @@ SoundHub.PlaylistApp = function(){
 		tagName: 'li',
 		className: 'songBlock',
 		events:{
-			'click .albumArt': 'play',
+			'click': 'play',
 			'click .remove': 'removeSong'
 		},
 		play: function(e){
-			songId = $(e.target).closest('.songBlock').children(':first').attr('id');
+			songId = $(e.target).closest('.songBlock').children(':first').attr('soundcloudid');
 			SoundHub.SoundCloudAPI.playTrack(songId);
 		},
 		removeSong: function(e){
@@ -33,45 +35,44 @@ SoundHub.PlaylistApp = function(){
 		itemView: TrackView
 	});
 
-	$(function() {
-	});
-
 	PlaylistApp.currentTrackInPlaylist = function(){
 		if ($('.currentTrack')) {
-			return $('.currentTrack').children(':first').attr('id');
+			return $('.currentTrack').children(':first').attr('soundcloudid');
 		}
 	};
 	PlaylistApp.nextTrackInPlaylist = function(){
 		if ($('.currentTrack') && $('.currentTrack').next()) {
-			return $('.currentTrack').next().children(':first').attr('id');
+			return $('.currentTrack').next().children(':first').attr('soundcloudid');
 		}
 		return false;
 	};
 	PlaylistApp.previousTrackInPlaylist = function(){
 		if ($('.currentTrack') && $('.currentTrack').prev()) {
-			return $('.currentTrack').prev().children(':first').attr('id');
+			return $('.currentTrack').prev().children(':first').attr('soundcloudid');
 		}
 		return false;
 	};
 	PlaylistApp.firstTrackInPlaylist = function() {
 		if ($('#playlist .songBlock').first()) {
-			return $('#playlist .songBlock').first().children(':first').attr('id');
+			return $('#playlist .songBlock').first().children(':first').attr('soundcloudid');
 		}
 		return false;
 	};
 	PlaylistApp.lastTrackInPlaylist = function() {
 		if ($('#playlist .songBlock').last()) {
-			return $('#playlist .songBlock').last().children(':first').attr('id');
+			return $('#playlist .songBlock').last().children(':first').attr('soundcloudid');
 		}
 		return false;
 	};
 
 
 	PlaylistApp.addSongToPlaylist = function(song) {
+		song.soundcloudid = song.id;
+		song.unset('id');
 		tracks.add(song);
 		if(tracks.length === 1){
-			$("#"+tracks.first().get('id')).parent().addClass('currentTrack');
-			SoundHub.SoundCloudAPI.playTrack(tracks.first().get('id'));
+			$( '[soundcloudid=' + tracks.first().get('soundcloudid') + ']').parent().addClass('currentTrack');
+			SoundHub.SoundCloudAPI.playTrack(tracks.first().get('soundcloudid'));
 		}
 		PlaylistApp.updatePlaylist();
 		SoundHub.AudioPlayer.updatePlayerButtons();
@@ -94,13 +95,33 @@ SoundHub.PlaylistApp = function(){
 			stop: function(e,ui){
 				PlaylistApp.updatePlaylist();
 				SoundHub.AudioPlayer.updatePlayerButtons();
-			}
+			},
+			handle: '.handle'
 		});
 
 	};
 	PlaylistApp.updatePlaylist = function() {
 		console.log("Playing track num: ", currentTrackNum);
 		console.log("Updating playlist.");
+		songBlockWidth =
+			Number($('#playlist .songBlock').width()) +
+			Number($('#playlist .songBlock').css('margin-left').replace(/px/gi, "")) +
+			Number($('#playlist .songBlock').css('margin-right').replace(/px/gi, "")) +
+			Number($('#playlist .songBlock').css('padding-left').replace(/px/gi, "")) +
+			Number($('#playlist .songBlock').css('padding-right').replace(/px/gi, ""));
+		$('#playlist').css('width',
+			(
+				songBlockWidth *
+				(
+					PlaylistApp.tracksCount()+
+					(
+						Number($('body').width()) /
+						songBlockWidth
+					)
+				) -
+				songBlockWidth +'px'
+			)
+		);
 		var passedCurrent = false;
 		$('#playlist .songBlock').each(function(index, element) {
 			if (!passedCurrent && $(element).hasClass('currentTrack')) {
@@ -122,7 +143,7 @@ SoundHub.PlaylistApp = function(){
 	};
 
 	PlaylistApp.makeThisTrackCurrent = function(songId) {
-		toBeCurrentTrack = $('#'+songId).parent();
+		toBeCurrentTrack = $('[soundcloudid='+songId+']').parent();
 		if ($('.currentTrack')) {
 			$('.currentTrack').each(function(index,element) {
 				$(element).removeClass('currentTrack');

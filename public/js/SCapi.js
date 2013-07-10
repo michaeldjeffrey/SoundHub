@@ -13,7 +13,7 @@ SoundHub.SoundCloudAPI = function(){
 			SC.get('/tracks', {genres: genre, limit: 15},
 				function(tracks, error) {
 					if (error) {
-						alert("Error: " + error.message);
+						$('body').html('NETWORK COMMUNICATION POOPERSNITZEL');
 					}
 					SoundHub.ResultsApp.initializeLayout(tracks, genre);
 				}
