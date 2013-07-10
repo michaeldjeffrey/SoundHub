@@ -135,6 +135,7 @@ SoundHub.PlaylistApp = function(){
 				}
 			}
 		});
+
 	};
 
 	PlaylistApp.makeThisTrackCurrent = function(toBeCurrentTrack) {
