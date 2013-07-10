@@ -20,7 +20,7 @@ SoundHub.ResultsApp = function(){
 		},
 		addToPlaylist: function(e){
 			SoundHub.PlaylistApp.addSongToPlaylist(this.model);
-			saveTask_localStorage(this.model);
+			//saveTask_localStorage(this.model);
 		}
 	});
 

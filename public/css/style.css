@@ -185,7 +185,7 @@ aside span.current {
 	margin: 5px;
 	padding: 15px;
 	color: rgb(153, 153, 153);
-	width: 40%;
+	width: 142px;
 	height: 160px;
 	display: inline-table;
 	box-shadow: 1px 1px rgb(218, 218, 218);
@@ -201,8 +201,8 @@ aside span.current {
 	border-radius:5px;
 	box-shadow:0 2px 5px rgba(0,0,0,.2);
 	border:3px solid rgba(0,0,0,.3);
-	width:80px;
-	height:80px;
+	width:120px;
+	height:120px;
 	margin:15px 10px 0 0;
 }
 #resultsList h3 {
@@ -263,6 +263,7 @@ aside span.current {
 	margin:0 5px;
 	white-space: normal;
 	position: relative;
+	overflow: hidden;
 }
 .songBlock:hover .remove{
 	background: rgba(255, 0, 0, 0.5);
@@ -272,18 +273,32 @@ aside span.current {
 	max-height: 42px !important;
 	display: block;
 	overflow: hidden;
+	position: absolute;
+	z-index: 1;
+	top:27px;
 }
 .songBlock .albumArt img {
-	width: 23px;
-	height: 23px;
-	float: right;
+	position: absolute;
+	right:0;
+	top:0;
+	margin:0;
+	z-index:0;
+	opacity: .2;
 }
 .songBlock .artist{
+	position: absolute;
+	top:23px;
 	clear: both;
+	z-index:1;
 }
 .songBlock .icon-ellipsis-horizontal {
+/*.songBlock .main-handle {*/
 	margin: auto;
 	color: rgba(250,250,250,0.2);
+	z-index:9001;
+	position:absolute;
+	top:5px;
+	left:7px;
 }
 .songBlock .icon-ellipsis-horizontal:hover {
 	color: rgba(250,250,250,1);
@@ -296,9 +311,13 @@ aside span.current {
 	border-radius: 100%;
 	padding: 2px 7px;
 	position: absolute;
-	top: 0;
-	right: 0;
+	bottom: 0;
+	left: 0;
 	text-transform: uppercase;
+	z-index:9001;
+}
+.remove:hover {
+	opacity: 1.0 !important;
 }
 .genre_item .remove{
 	position: absolute;

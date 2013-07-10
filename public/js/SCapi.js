@@ -30,7 +30,8 @@ SoundHub.SoundCloudAPI = function(){
 			SoundHub.ResultsApp.addSongs(tracks);
 		});
 	};
-	SoundCloudAPI.loadTrack = function(songId) {
+	SoundCloudAPI.loadTrack = function(song) {
+		songId = $(song).attr('soundcloudid');
 		SC.streamStopAll();
 		SoundHub.AudioPlayer.audio = SC.stream('/tracks/'+songId, {
 			useEQData: true,
@@ -46,11 +47,12 @@ SoundHub.SoundCloudAPI = function(){
 		});
 		SoundHub.AudioPlayer.audio.pause();
 		SoundHub.AudioPlayer.audio.setVolume($('.volume-slider').slider('option', 'value'));
-		SoundHub.PlaylistApp.makeThisTrackCurrent(songId);
+		SoundHub.PlaylistApp.makeThisTrackCurrent(song);
 	};
-	SoundCloudAPI.playTrack = function(songId) {
+	SoundCloudAPI.playTrack = function(song) {
+		songId = $(song).children(':first').attr('soundcloudid');
 		SC.streamStopAll();
-		SoundHub.AudioPlayer.audio = SC.stream('/tracks/'+songId, { 
+		SoundHub.AudioPlayer.audio = SC.stream('/tracks/'+songId, {
 			useEQData: true,
 			usePeakData: true
 		});
@@ -63,7 +65,7 @@ SoundHub.SoundCloudAPI = function(){
 			}
 		});
 		SoundHub.AudioPlayer.audio.setVolume($('.volume-slider').slider('option', 'value'));
-		SoundHub.PlaylistApp.makeThisTrackCurrent(songId);
+		SoundHub.PlaylistApp.makeThisTrackCurrent(song);
 		$("#progressBar").slider("value", 0);
 		$("#progressBar").progressbar({
 			value: false
