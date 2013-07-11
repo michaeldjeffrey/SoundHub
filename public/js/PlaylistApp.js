@@ -11,14 +11,14 @@ SoundHub.PlaylistApp = function(){
 	var TrackView = Backbone.Marionette.ItemView.extend({
 		template: '#tracks_item_template',
 		tagName: 'li',
-		className: 'songBlock',
+		className: 'trackBlock',
 		events:{
 			'click .trackInfo': 'play',
 			'click .remove': 'removeSong'
 		},
 		play: function(e){
-			songBlock = $(e.target).closest('.songBlock');
-			SoundHub.SoundCloudAPI.playTrack(songBlock);
+			trackBlock = $(e.target).closest('.trackBlock');
+			SoundHub.SoundCloudAPI.playTrack(trackBlock);
 		},
 		removeSong: function(e){
 			console.log('remove called');
@@ -29,6 +29,7 @@ SoundHub.PlaylistApp = function(){
 	var TracksView = Backbone.Marionette.CompositeView.extend({
 		tagName: 'ul',
 		id: 'playlist',
+		className: "small-block-grid-24",
 		template: '#tracks_template',
 		itemView: TrackView
 	});
@@ -51,14 +52,14 @@ SoundHub.PlaylistApp = function(){
 		return false;
 	};
 	PlaylistApp.firstTrackInPlaylist = function() {
-		if ($('#playlist .songBlock').first()) {
-			return $('#playlist .songBlock').first();
+		if ($('#playlist .trackBlock').first().children(':first').attr('soundcloudid') != undefined) {
+			return $('#playlist .trackBlock').first();
 		}
 		return false;
 	};
 	PlaylistApp.lastTrackInPlaylist = function() {
-		if ($('#playlist .songBlock').last()) {
-			return $('#playlist .songBlock').last();
+		if ($('#playlist .trackBlock').last().children(':first').attr('soundcloudid') != undefined) {
+			return $('#playlist .trackBlock').last();
 		}
 		return false;
 	};
@@ -85,6 +86,7 @@ SoundHub.PlaylistApp = function(){
 		SoundHub.playlistApp.show(tracksView);
 
 		$('#playlist').sortable({
+			axis: "x",
 			revert: 77,
 			tolerance: "pointer",
 			stop: function(e,ui){
@@ -92,33 +94,37 @@ SoundHub.PlaylistApp = function(){
 				SoundHub.AudioPlayer.updatePlayerButtons();
 			},
 			handle: '.handle'
+		}).droppable({
+			drop: function( event, ui ) {
+				//
+			}
 		});
 
 	};
 	PlaylistApp.updatePlaylist = function() {
 		console.log("Playing track num: ", currentTrackNum);
 		console.log("Updating playlist.");
-		songBlockWidth =
-			Number($('#playlist .songBlock').width()) +
-			Number($('#playlist .songBlock').css('margin-left').replace(/px/gi, "")) +
-			Number($('#playlist .songBlock').css('margin-right').replace(/px/gi, "")) +
-			Number($('#playlist .songBlock').css('padding-left').replace(/px/gi, "")) +
-			Number($('#playlist .songBlock').css('padding-right').replace(/px/gi, ""));
+		trackBlockWidth =
+			Number($('#playlist .trackBlock').width()) +
+			Number($('#playlist .trackBlock').css('margin-left').replace(/px/gi, "")) +
+			Number($('#playlist .trackBlock').css('margin-right').replace(/px/gi, "")) +
+			Number($('#playlist .trackBlock').css('padding-left').replace(/px/gi, "")) +
+			Number($('#playlist .trackBlock').css('padding-right').replace(/px/gi, ""));
 		$('#playlist').css('width',
 			(
-				songBlockWidth *
+				trackBlockWidth *
 				(
 					PlaylistApp.tracksCount()+
 					(
-						Number($('body').width()) /
-						songBlockWidth
+						Number($('#playlistApp').width()) /
+						trackBlockWidth
 					)
 				) -
-				songBlockWidth +'px'
+				trackBlockWidth +'px'
 			)
 		);
 		var passedCurrent = false;
-		$('#playlist .songBlock').each(function(index, element) {
+		$('#playlist .trackBlock').each(function(index, element) {
 			if (!passedCurrent && $(element).hasClass('currentTrack')) {
 				passedCurrent = true;
 				currentTrackNum = index+1;
@@ -155,6 +161,12 @@ SoundHub.PlaylistApp = function(){
 	PlaylistApp.currentTrackNum = function() {
 		return currentTrackNum;
 	};
+
+	$("#playlist").droppable({
+		drop: function(event,ui) {
+			$(event.target).trigger('click');
+		}
+	})
 
 	return PlaylistApp;
 

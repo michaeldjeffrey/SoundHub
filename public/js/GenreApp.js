@@ -3,7 +3,7 @@ SoundHub.GenreApp = function(){
 	var GenreApp = {};
 
 	var genreList = [
-		'Alternative', 'Anime', 'Blues', "Children's Music", 'Classical', "Comedy", "Country", "Dance", "Disney", "Easy Listening", "Electronic", "Enka", "French Pop", "German Folk", "German Pop", "Fitness & Workout", "Hip-Hop/Rap", "Holiday", "Indie Pop", "Industrial", "Inspirational - Christian & Gospel", "Instrumental", "J-Pop", "Jazz", "K-Pop", "Karaoke", "Kayokyoku", "Latino", "New Age", "OPera", "Pop", "R&B/Soul", "Reggae", "Rock", "Singer/Songwriter", "Soundtrack", "Spoken Word", "Vocal", "World"
+		"Alternative", "Anime", "Blues", "Classical", "Comedy", "Country", "Dance", "Disney", "Easy Listening", "Electronic", "Enka", "French Pop", "German Folk", "German Pop", "Fitness & Workout", "Hip-Hop/Rap", "Holiday", "Indie Pop", "Industrial", "Instrumental", "J-Pop", "Jazz", "K-Pop", "Karaoke", "Latino", "New Age", "Opera", "Pop", "R&B/Soul", "Reggae", "Rock", "Singer/Songwriter", "Soundtrack", "Spoken Word", "Vocal", "World"
 	];
 
 	var Genre = Backbone.Model.extend({});
@@ -65,7 +65,13 @@ SoundHub.GenreApp = function(){
 			return false;
 		},
 		toggleRemoveGenres: function(e){
-			$(".genre_item").find('.remove').toggle();
+			if ($('.removeGenre').attr('active')) {
+				$('.removeGenre').removeAttr('active');
+				$(".genre_item").find('.remove').hide();
+			} else {
+				$('.removeGenre').attr('active', 'true');
+				$(".genre_item").find('.remove').show();
+			}
 		}
 	});
 	var PlaylistsView = Backbone.Marionette.CompositeView.extend({
@@ -97,7 +103,7 @@ SoundHub.GenreApp = function(){
 		a.forEach(function(a, i){
 			list[i] = new Playlist(a);
 		});
-		console.log(list);
+		//console.log(list);
 		// for (var i = 0; i < localStorage.length; i++) {
 		// 	var json = JSON.parse(localStorage.getItem(i));
 		// 	console.log(json);
@@ -137,6 +143,17 @@ SoundHub.GenreApp = function(){
 		// Load up the first genre by default:
 		SoundHub.SoundCloudAPI.searchByGenre(genres.models[0].attributes.name);
 	};
+
+	$(function() {
+		$(window).resize(function() {
+			$('#genreApp').height($(window).height()-$('#audioBar').height()-Number($('#mainWrapper').css('margin-top').replace(/px/,'')));
+		});
+		$("#genreApp").change(function() {
+			$('#genreApp').height($(window).height()-$('#audioBar').height()-Number($('#mainWrapper').css('margin-top').replace(/px/,'')));
+		});
+
+	});
+
 
 
 	return GenreApp;

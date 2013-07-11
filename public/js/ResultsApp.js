@@ -14,7 +14,7 @@ SoundHub.ResultsApp = function(){
 	var ResultView = Backbone.Marionette.ItemView.extend({
 		template: '#result_item_template',
 		tagName: 'li',
-		className: 'songItem',
+		className: 'trackItem',
 		events:{
 			'click': 'addToPlaylist'
 		},
@@ -30,8 +30,9 @@ SoundHub.ResultsApp = function(){
 			_.bindAll(this, 'detect_scroll');
 			$("#resultsApp").scroll(this.detect_scroll);
 		},
-		tagName: 'ul',
 		id: 'resultsList',
+		tagName: 'ul',
+		className: "small-block-grid-1 large-block-grid-3",
 		template: '#results_template',
 		itemView: ResultView,
 		appendHTML: function(collectionView, itemView){
@@ -86,13 +87,27 @@ SoundHub.ResultsApp = function(){
 
 		//show the new view in the region for main app
 		SoundHub.resultsApp.show(resultsView);
+
+		$('#resultsList>li').draggable({
+			appendTo: "#playlist",
+			helper: "clone",
+			start: function( event, ui ) {
+			}
+		});
 	};
 
+	$(function() {
+		$(".songItem").draggable();
+	});
 
+	$(function() {
+		$(window).resize(function() {
+			$('#resultsApp').height($(window).height()-$('#audioBar').height()-Number($('#mainWrapper').css('margin-top').replace(/px/,'')));
+		});
 
+	});
 
 	$("#query").on('focus', function(){
-
 		var history = results.clone();
 
 		$(this).on('keyup', function(){
