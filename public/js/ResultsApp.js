@@ -14,19 +14,15 @@ SoundHub.ResultsApp = function(){
 	var ResultView = Backbone.Marionette.ItemView.extend({
 		template: '#result_item_template',
 		tagName: 'li',
-		className: 'songItem',
+		className: 'trackItem',
 		events:{
-			'click .addToPlaylist': 'addToPlaylist'
+			'click': 'addToPlaylist'
 		},
 		addToPlaylist: function(e){
 			SoundHub.PlaylistApp.addSongToPlaylist(this.model);
-			saveTask_localStorage(this.model)
-			$(e.currentTarget).addClass('faded');
+			//saveTask_localStorage(this.model);
 		}
 	});
-
-
-
 
 	var ResultsView = Backbone.Marionette.CompositeView.extend({
 		initialize: function(){
@@ -34,8 +30,9 @@ SoundHub.ResultsApp = function(){
 			_.bindAll(this, 'detect_scroll');
 			$("#resultsApp").scroll(this.detect_scroll);
 		},
-		tagName: 'ul',
 		id: 'resultsList',
+		tagName: 'ul',
+		className: "small-block-grid-1 large-block-grid-3",
 		template: '#results_template',
 		itemView: ResultView,
 		appendHTML: function(collectionView, itemView){
@@ -45,9 +42,9 @@ SoundHub.ResultsApp = function(){
 		detect_scroll: function(){
 			var height = $("#resultsList")[0].scrollHeight;
 			var scrollP = $("#resultsApp")[0].scrollTop;
-			if((scrollP + 700) > height && loadingSongs == false){
+			if((scrollP + 700) > height && loadingSongs === false){
 				loadingSongs = true;
-				SoundHub.SoundCloudAPI.moreSongs(page_size, page_offset)
+				SoundHub.SoundCloudAPI.moreSongs(page_size, page_offset);
 				page_offset += 15;
 			}
 		}
@@ -59,19 +56,21 @@ SoundHub.ResultsApp = function(){
 			list[i] = new Result({
 				title: tracks[i].title,
 				artist: tracks[i].user.username,
-				id: tracks[i].id,
+				soundcloudid: tracks[i].id,
 				albumArt: tracks[i].artwork_url,
-				listens: tracks[i].playback_count
+				listens: tracks[i].playback_count,
+				soundcloudWebURL: tracks[i].permalink_url,
+				waveformImageURL: tracks[i].waveform_url,
+				duration: tracks[i].duration
 			});
 		});
 		return list;
-
-	}
+	};
 
 	ResultsApp.addSongs = function(tracks){
-		results.add(GetTracksByGenre(tracks))
+		results.add(GetTracksByGenre(tracks));
 		loadingSongs = false;
-	}
+	};
 
 	ResultsApp.initializeLayout = function(options, genre){
 		//make new collection
@@ -87,23 +86,36 @@ SoundHub.ResultsApp = function(){
 		});
 
 		//show the new view in the region for main app
-		SoundHub.resultsApp.show(resultsView)
-	}
+		SoundHub.resultsApp.show(resultsView);
 
+		$('#resultsList>li').draggable({
+			appendTo: "#playlist",
+			helper: "clone",
+			start: function( event, ui ) {
+			}
+		});
+	};
 
+	$(function() {
+		$(".songItem").draggable();
+	});
 
+	$(function() {
+		$(window).resize(function() {
+			$('#resultsApp').height($(window).height()-$('#audioBar').height()-Number($('#mainWrapper').css('margin-top').replace(/px/,'')));
+		});
+
+	});
 
 	$("#query").on('focus', function(){
-
 		var history = results.clone();
 
 		$(this).on('keyup', function(){
 			var val = $(this).val();
-			var matched = history.filter(function(model) { 
-				return model.attributes.title.toLowerCase().indexOf(val.toLowerCase()) > -1
+			var matched = history.filter(function(model) {
+				return model.attributes.title.toLowerCase().indexOf(val.toLowerCase()) > -1;
 			});
-			results.reset(matched)
-			
+			results.reset(matched);
 		});
 	});
 

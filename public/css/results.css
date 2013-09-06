@@ -1,0 +1,13 @@
+#resultsList .trackItem {
+    font-size: .5em;
+    overflow: hidden;
+}
+
+#resultsList .trackItem .albumArt>img {
+    width: 100px;
+    height: 100px
+}
+
+#resultsApp {
+    overflow-y: scroll;
+}
