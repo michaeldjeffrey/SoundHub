@@ -86,13 +86,13 @@ SoundHub.GenreApp = function(){
 		return list;
 	}
 	var gatheredPlaylists = function(){
-		var a = retrieve_localStorage();
-		console.log(a)
-		var list = [];
-		a.forEach(function(a, i){
-			list[i] = new Playlist({a})
-		})
-		console.log(list)
+		// var a = retrieve_localStorage();
+		// console.log(a)
+		// var list = [];
+		// a.forEach(function(a, i){
+		// 	list[i] = new Playlist({a})
+		// })
+		// console.log(list)
 		// for (var i = 0; i < localStorage.length; i++) {
 		// 	var json = JSON.parse(localStorage.getItem(i))
 		// 	console.log(json)
@@ -113,7 +113,7 @@ SoundHub.GenreApp = function(){
 		genres = new Genres(randomGenres());
 		playlists = new Playlists(gatheredPlaylists());
 
-		//making new compositeview and passing 
+		//making new compositeview and passing
 		//previously made collection
 		var genresView = new GenresView({
 			collection: genres
