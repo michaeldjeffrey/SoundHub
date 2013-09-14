@@ -2,6 +2,9 @@ SC.initialize({
 	client_id: "d945fc936728c08f4e2b720cc5998fd9"
 });
 
+RETRY_LIMIT = 3;
+CURRENT_TRY = 0;
+
 SoundHub.SoundCloudAPI = function(){
 
 	var SoundCloudAPI = {};
@@ -9,14 +12,18 @@ SoundHub.SoundCloudAPI = function(){
 	var currentGenre;
 
 	SoundCloudAPI.searchByGenre = function(genre) {
-		currentGenre = genre || 'country';
+		var currentGenre = genre;
 		SC.get('/tracks', {genres: genre.toLowerCase(), limit: 15},
 		function(tracks, error) {
-			if (error) {
-				setTimeout(SoundCloudAPI.searchByGenre('country'), 300);
+			if (error && CURRENT_TRY !== RETRY_LIMIT) {
+				CURRENT_TRY++;
+				setTimeout(SoundCloudAPI.searchByGenre(currentGenre), 300);
 				console.log("Error: ", error.message);
-				console.log('trying again in 300 milliseconds with country');
+			} else if(CURRENT_TRY == RETRY_LIMIT) {
+				CURRENT_TRY = 0
+				SoundHub.ResultsApp.initializeLayout('failed', currentGenre);
 			} else {
+			CURRENT_TRY = 0
 			SoundHub.ResultsApp.initializeLayout(tracks, currentGenre);
 			}
 		}
