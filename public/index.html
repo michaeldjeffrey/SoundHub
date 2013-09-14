@@ -1,179 +1,147 @@
 <!DOCTYPE html>
-<!--[if IE 8]>         <html class="no-js lt-ie9" lang="en"> <![endif]-->
-<!--[if gt IE 8]><!--> <html class="no-js" lang="en"> <!--<![endif]-->
-
+<!--[if IE 8]>         <html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> 
+<html class="no-js" lang="en" > 
+<!--<![endif]-->
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width" />
   <link rel="stylesheet" href="http://code.jquery.com/ui/1.10.3/themes/smoothness/jquery-ui.css" />
-
-  <link rel="stylesheet" href="css/normalize.css" />
-  <link rel="stylesheet" href="css/foundation.min.css" />
-
   <link rel="stylesheet" href="css/icons.css">
-
-  <link rel="stylesheet" href="css/audiobar.css" />
-  <link rel="stylesheet" href="css/genres.css" />
-  <link rel="stylesheet" href="css/results.css" />
-  <link rel="stylesheet" href="css/app.css" />
-
+  <link rel="stylesheet" href="css/style.css">
   <link href='http://fonts.googleapis.com/css?family=Ubuntu:400,700,400italic,700italic' rel='stylesheet' type='text/css'>
-  
-  <title>SoundHub</title>
 
-  <!-- ================================= -->
-  <!-- START TEMPLATES -->
-  <!-- ================================= -->
-  <script type='text/template' id='genreApp_layout'>
-  <div id="genres_list"></div>
-  <div id="playlists_list"></div>
-  </script>
+<title>SoundHub</title>
+
+<!-- ================================= -->
+<!-- START TEMPLATES -->
+<!-- ================================= -->
+<script type='text/template' id='genreApp_layout'>
+<div id="genres_list"></div>
+<div id="playlists_list"></div>
+</script>
 
 
-  <script type='text/template' id='genres_template'>
-  <li id="genreSearch">
-  <form>
-  <input type="text" class='genreAppInput' id="genre" placeholder="add a genre" />
-  <input type="submit" class='button genreAppButton' id="getGenre" value="GO" />
-  </form>
-  </li>
-  <li class='button removeGenre genre_item'>Remove Genres</li>
-  </script>
+<script type='text/template' id='genres_template'>
+<i class="icon-chevron-sign-left" id='toPlaylist'></i>
+<li id="genreSearch">
+<form>
+<input type="text" class='genreAppInput' id="genre" placeholder="add a genre" />
+<input type="submit" class='button genreAppButton' id="getGenre" value="GO" />
+</form>
+</li>
+<li class='button removeGenre genre_item'>Remove Genres</li>
+</script>
 
-  <script type='text/template' id='playlists_template'>
-  <li id="genreSearch">
-  <input type="text" class='genreAppInput' id="playlistInput" placeholder="add a playlist" />
-  <input type="button" class='genreAppButton' id="playlistInputGo" value="GO" />
-  </li>
-  <li class='removeGenre genre_item'>Remove Playlist</li>
-  </script>
+<script type='text/template' id='playlists_template'>
+<li id="genreSearch">
+<input type="text" class='genreAppInput' id="playlistInput" placeholder="add a playlist" />
+<input type="button" class='genreAppButton' id="playlistInputGo" value="GO" />
+</li>
+<li class='removeGenre genre_item'>Remove Playlist</li>
+</script>
 
-  <script type='text/template' id='genre_item_template'>
-  {{ name }} <span class='button remove'>X</span>
-  </script>
-  <script type='text/template' id="playlist_item_template">
-  {{ name }} <span class='button remove'>X</span>
-  </script>
+<script type='text/template' id='genre_item_template'>
+{{ name }} <span class='button remove'>X</span>
+</script>
+<script type='text/template' id="playlist_item_template">
+{{ name }} <span class='button remove'>X</span>
+</script>
 
-  <!-- ================================= -->
-  <script type="text/template" id="results_template">
-  <p>Showing results for <span class="query">{{genre}}</span>!</p>
-  </script>
+<!-- ================================= -->
+<script type="text/template" id="results_template">
+<p>Showing results for <span class="query">{{genre}}</span>!</p>
+</script>
 
-  <script type='text/template' id='result_item_template'>
-  <div>
-  <div class='albumArt'>
-  <img src='{{albumArt}}' alt='{{title}}' title='{{title}}' />
-  </div>
-  <h3>
-  <span class='title'>{{title}}</span>
-  <span class='artist'>by {{artist}}</span>
-  </h3>
-  <div class='button addToPlaylist' data-id='{{soundcloudid}}' data-title='{{title}}' data-albumart='{{albumArt}}'>add to playlist</div>
-  <div class='listens'>{{listens}} listens
-  <div><a target="_soundcloud" href='{{soundcloudWebURL}}'><img src="images/soundcloud-logo.png"></a></div>
-  <div class="waveformImageWrapper"><span class="duration">{{duration}}</span><img width="100%" src="{{waveformImageURL}}" /></div>
-  </div>
-  </div>
-  </script>
-  <!-- ================================= -->
+<script type='text/template' id='result_item_template'>
+<div class='albumArt'>
+<img src='{{albumArt}}' alt='{{title}}' title='{{title}}' />
+</div>
+<h3>
+<span class='title'>{{title}}</span>
+<span class='artist'>by {{artist}}</span>
+</h3>
+<div class='button addToPlaylist' data-id='{{id}}' data-title='{{title}}' data-albumart='{{albumArt}}'>add to playlist</div>
+<div class='listens'>{{listens}} listens
+<div><a target="_soundcloud" href='{{soundcloudWebURL}}'><img src="images/soundcloud-logo.png"></a></div>
+<div class="waveformImageWrapper"><span class="duration">{{duration}}</span><img width="100%" src="{{waveformImageURL}}" /></div>
+</div><hr class='clear'/>
+</script>
+<!-- ================================= -->
 
-  <script type="text/template" id='tracks_template'>
-  </script>
+<script type="text/template" id='tracks_template'>
+</script>
 
-  <script type="text/template" id='tracks_item_template'>
-  <div soundcloudid='{{soundcloudid}}'>
-  <span class='button remove icon icon-remove-sign'></span>
-  <div class="handle icon icon-ellipsis-vertical"></div>
-  <div class="trackInfo">
-  <div class="albumArt"><img src="{{albumArt}}" ></div>
-  <span class="title">{{title}}</span>
-  </div>
-  </div>
-  </script>
+<script type="text/template" id='tracks_item_template'>
+<div id='{{id}}'>
+<span class='button remove'>X</span>
+<div class="icon icon-ellipsis-horizontal"></div>
+<div class="albumArt"><img src="{{albumArt}}" ></div>
+<span class="title">{{title}}</span>
+</div>
+</script>
 
-  <!-- ================================= -->
-  <!-- END  TEMPLATES -->
-  <!-- ================================= -->
+<!-- ================================= -->
+<!-- END  TEMPLATES -->
+<!-- ================================= -->
 </head>
 <body>
-  <div id="mainWrapper">
-    <div class="row">
-      <div class="left small-4 columns">
-        <div class="wrapper">
-          <div id="mainLogo"></div>
-          <div id="poweredBySoundCloudLogo"></div>
-          <div id="eq">
-            <div class="left" style="position:absolute;font-size:42pt;top:1px;left:10px;background:black;width:7px;height:0;"></div>
-            <div class="right" style="position:absolute;font-size:42pt;top:1px;left:20px;background:black;width:7px;height:0;"></div>
-          </div>
+  <div id="container">
+    <header>
+      <ul class="left">
+        <div id="mainLogo"></div>
+        <div id="poweredBySoundCloudLogo"></div>
+        <div id="eq">
+          <div class="left" style="position:absolute;font-size:42pt;top:1px;left:10px;background:black;width:7px;height:0;"></div>
+          <div class="right" style="position:absolute;font-size:42pt;top:1px;left:20px;background:black;width:7px;height:0;"></div>
         </div>
-      </div>
-      <div class="right small-8 columns">
+      </ul>
+      <ul class="right">
         <div id="search">
           <input type="text" id="query" placeholder="Filter by track title" />
           <input type="button" id="getQuery" value="GO" />
         </div>
-      </div>
-    </div>
-    <div class="row">
-      <div id="leftSidebar" class="small-4 columns">
+      </ul>
+      <hr class="clear" />
+    </header>
+    <section>
+      <aside>
         <div id="genreApp"></div>
+      </aside>
+      <div id="resultsApp">
+        <p>Loading...</p>
+        <ul id="resultsList">
+        </ul>
       </div>
-      <div id="mainContent" class="small-8 columns">
-        <div id="resultsApp">
-          <p>Loading...</p>
-          <ul id="resultsList" class="small-block-grid-2"></ul>
-        </div>
+    </section>
+    <div id="audioPlayer">
+      <div id="shortTermControls">
+        <i class="button icon icon-step-backward" disabled="disabled"></i>
+        <i class="button icon icon-play" id='playpause' disabled="disabled"></i>
+        <i class="button icon icon-step-forward" disabled="disabled"></i>
       </div>
+      <div id="longTermControls">
+        <i class="button icon icon-random" status="inactive"></i>
+        <i class="button icon icon-repeat" status="inactive"></i>
+        <span class="volume-wrapper">
+          <i class="button icon mute-icon icon-volume-up"></i>
+          <span class="volume-slider-wrapper"><span class='volume-slider'></span></span>
+        </span>
+      </div>
+      <div id="progressBar"></div>
     </div>
-    <div class="row">
-      <div class="contain-to-grid fixed sticky">
-        <div class="small-12 columns">
-          <div id="audioBar">
-            <div id="audioPlayer" class="row">
-              <div id="shortTermControls" class="small-6 large-3 columns">
-                <ul class="small-block-grid-3">
-                  <li class="button icon icon-step-backward" id="playprevious" disabled="disabled"></li>
-                  <li class="button icon icon-play" id='playpause' disabled="disabled"></li>
-                  <li class="button icon icon-step-forward" id="playnext" disabled="disabled"></li>
-                </ul>
-              </div>
-              <div id="longTermControls" class="small-6 large-3 columns small-block-grid-3">
-                <ul class="small-block-grid-3">
-                  <li class="button icon icon-random" status="inactive"></li>
-                  <li class="button icon icon-repeat" status="inactive"></li>
-                  <li class="button volume-wrapper">
-                    <span class="icon mute-icon icon-volume-up hide-for-touch"></span>
-                    <div class="volume-slider-wrapper"><span class='volume-slider'></span></div>
-                  </li>
-                </ul>
-              </div>
-              <div id="progressBar" class="small-12 large-6 columns"></div>
-            </div>
-            <div id="playlistApp" class="row">
-              <div id="playlistWrap">
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
+    <div id="playlistApp"></div>
   </div>
 
-
   <script src="https://connect.soundcloud.com/sdk.js"></script>
-  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.1/jquery.min.js"></script>
-  <script src="http://code.jquery.com/ui/1.10.3/jquery-ui.js"></script>
-  <script src="js/libs/jquery.hoverIntent.js"></script>
-  <script src="js/libs/jquery.shuffle.js"></script>
-  <script src="js/libs/foundation.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
   <script src="js/libs/underscore.js"></script>
   <script src="js/libs/backbone.js"></script>
   <script src="js/libs/marionette.js"></script>
-  <script src="https://cdn.firebase.com/v0/firebase.js"></script>
-  <script src="js/libs/backbone-firebase.js"></script>
   <script src="http://cdnjs.cloudflare.com/ajax/libs/gsap/1.10.0/TweenMax.min.js"></script>
+  <script src="http://code.jquery.com/ui/1.10.3/jquery-ui.js"></script>
+  <script src="js/libs/jquery.hoverIntent.js"></script>
+  <script src="js/libs/jquery.shuffle.js"></script>
   <script src='js/app.js'></script>
   <script src='js/AudioPlayer.js'></script>
   <script src='js/GenreApp.js'></script>

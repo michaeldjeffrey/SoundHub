@@ -13,7 +13,7 @@ SoundHub.SoundCloudAPI = function(){
 			SC.get('/tracks', {genres: genre, limit: 15},
 				function(tracks, error) {
 					if (error) {
-						$('body').html('NETWORK COMMUNICATION POOPERSNITZEL');
+						alert("Error: " + error.message);
 					}
 					SoundHub.ResultsApp.initializeLayout(tracks, genre);
 				}
@@ -30,8 +30,7 @@ SoundHub.SoundCloudAPI = function(){
 			SoundHub.ResultsApp.addSongs(tracks);
 		});
 	};
-	SoundCloudAPI.loadTrack = function(song) {
-		songId = $(song).attr('soundcloudid');
+	SoundCloudAPI.loadTrack = function(songId) {
 		SC.streamStopAll();
 		SoundHub.AudioPlayer.audio = SC.stream('/tracks/'+songId, {
 			useEQData: true,
@@ -47,12 +46,11 @@ SoundHub.SoundCloudAPI = function(){
 		});
 		SoundHub.AudioPlayer.audio.pause();
 		SoundHub.AudioPlayer.audio.setVolume($('.volume-slider').slider('option', 'value'));
-		SoundHub.PlaylistApp.makeThisTrackCurrent(song);
+		SoundHub.PlaylistApp.makeThisTrackCurrent(songId);
 	};
-	SoundCloudAPI.playTrack = function(song) {
-		songId = $(song).children(':first').attr('soundcloudid');
+	SoundCloudAPI.playTrack = function(songId) {
 		SC.streamStopAll();
-		SoundHub.AudioPlayer.audio = SC.stream('/tracks/'+songId, {
+		SoundHub.AudioPlayer.audio = SC.stream('/tracks/'+songId, { 
 			useEQData: true,
 			usePeakData: true
 		});
@@ -65,7 +63,7 @@ SoundHub.SoundCloudAPI = function(){
 			}
 		});
 		SoundHub.AudioPlayer.audio.setVolume($('.volume-slider').slider('option', 'value'));
-		SoundHub.PlaylistApp.makeThisTrackCurrent(song);
+		SoundHub.PlaylistApp.makeThisTrackCurrent(songId);
 		$("#progressBar").slider("value", 0);
 		$("#progressBar").progressbar({
 			value: false
