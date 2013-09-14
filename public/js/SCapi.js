@@ -9,25 +9,32 @@ SoundHub.SoundCloudAPI = function(){
 	var currentGenre;
 
 	SoundCloudAPI.searchByGenre = function(genre) {
-		currentGenre = genre;
-			SC.get('/tracks', {genres: genre, limit: 15},
-				function(tracks, error) {
-					if (error) {
-						alert("Error: " + error.message);
-					}
-					SoundHub.ResultsApp.initializeLayout(tracks, genre);
-				}
-			);
+		currentGenre = genre || 'country';
+		SC.get('/tracks', {genres: genre.toLowerCase(), limit: 15},
+		function(tracks, error) {
+			if (error) {
+				setTimeout(SoundCloudAPI.searchByGenre('country'), 300);
+				console.log("Error: ", error.message);
+				console.log('trying again in 300 milliseconds with country');
+			} else {
+			SoundHub.ResultsApp.initializeLayout(tracks, currentGenre);
+			}
+		}
+	);
 	};
 
 	SoundCloudAPI.moreSongs = function(page_size, page_offset){
 		SC.get('/tracks', {
-			genres: currentGenre,
+			genres: currentGenre.toLowerCase(),
 			limit: page_size,
 			offset: page_offset
-		},
-		function(tracks) {
+		}, function(tracks, error) {
+			if(error){
+				setTimeout(SoundCloudAPI.moreSongs(page_size, page_offset), 300);
+				console.log("trying again in 300 milliseconds with same settings")
+			} else {
 			SoundHub.ResultsApp.addSongs(tracks);
+			}
 		});
 	};
 	SoundCloudAPI.loadTrack = function(songId) {
