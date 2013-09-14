@@ -74,6 +74,9 @@ SoundHub.ResultsApp = function(){
 	};
 
 	ResultsApp.initializeLayout = function(options, genre){
+		if(options === 'failed'){
+			$("#resultsApp").html("<h2>Sorry we couldn't find any results for the " + genre + "...</h2>")
+		} else {
 		//make new collection
 		//calling function to generate models
 		results = new Results(GetTracksByGenre(options));
@@ -88,6 +91,7 @@ SoundHub.ResultsApp = function(){
 
 		//show the new view in the region for main app
 		SoundHub.resultsApp.show(resultsView);
+		}
 	};
 
 
