@@ -21,7 +21,6 @@ SoundHub.PlaylistApp = function(){
 			SoundHub.SoundCloudAPI.playTrack(songId);
 		},
 		removeSong: function(e){
-			console.log('remove called');
 			tracks.remove(this.model);
 		}
 	});
@@ -31,9 +30,6 @@ SoundHub.PlaylistApp = function(){
 		id: 'playlist',
 		template: '#tracks_template',
 		itemView: TrackView
-	});
-
-	$(function() {
 	});
 
 	PlaylistApp.currentTrackInPlaylist = function(){
