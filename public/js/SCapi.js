@@ -13,7 +13,7 @@ SoundHub.SoundCloudAPI = function(){
 
 	SoundCloudAPI.searchByGenre = function(genre) {
 		var currentGenre = genre;
-		SC.get('/tracks', {genres: genre.toLowerCase(), limit: 15},
+		SC.get('/tracks', {genres: genre.toLowerCase(), limit: 15, filter: 3},
 		function(tracks, error) {
 			if (error && CURRENT_TRY !== RETRY_LIMIT) {
 				CURRENT_TRY++;
@@ -34,7 +34,8 @@ SoundHub.SoundCloudAPI = function(){
 		SC.get('/tracks', {
 			genres: currentGenre.toLowerCase(),
 			limit: page_size,
-			offset: page_offset
+			offset: page_offset,
+			filter: 3
 		}, function(tracks, error) {
 			if(error){
 				setTimeout(SoundCloudAPI.moreSongs(page_size, page_offset), 300);
