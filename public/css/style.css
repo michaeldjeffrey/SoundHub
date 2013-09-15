@@ -387,7 +387,7 @@ i:active{
 	width: 10px;
 }
 #audioPlayer #progressBar .ui-slider-range{
-	background: #DD3841;
+	background: rgb(99, 107, 143);
 }
 
 #audioPlayer #longTermControls {
@@ -403,7 +403,7 @@ i:active{
 	opacity: .2;
 }
 .currentTrack{
-	background: #DD3841;
+	background: rgb(99, 107, 143);
 }
 
 #genres_list, #playlists_list{
